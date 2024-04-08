@@ -1,82 +1,129 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PlantPass Calculator</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-        }
+  <title>PlantPass Calculator</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
 
-        h1 {
-            font-size: 24px;
-            font-weight: 700;
-        }
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+    }
 
-        h2 {
-            font-size: 20px;
-            font-weight: 400;
-        }
+    h2, h3 {
+      font-size: 20px;
+      font-weight: 400;
+    }
 
-        .form-group {
-            margin-bottom: 10px;
-        }
+    .form-group {
+      margin-bottom: 10px;
+    }
 
-        .form-group label {
-            display: inline-block;
-            width: 150px;
-        }
+    .form-group label {
+      display: inline-block;
+      width: 165px;
+    }
 
-        .form-group input[type="number"] {
-            width: 50px;
-        }
+    .form-group input[type="number"] {
+      width: 50px;
+    }
 
-        form {
-            margin-top: 20px;
-        }
-    </style>
-    <script>
-        function calculateTotal() {
-            var twoInchPrice = 3.00, fourInchPrice = 5.00, threePackPrice = 5.00;
-            var fourPackPrice = 5.00, fiveHalfSixInchPrice = 8.00, decorativePrice = 20.00, fiveGallonPrice = 25.00;
+    form {
+      margin-top: 20px;
+    }
+  </style>
+  <script>
+    function calculateTotal() {
+      var twoInchPrice = 3.0, fourInchPrice = 5.0, threePackPrice = 5.0, fourPackPrice = 5.0,
+          fiveHalfSixInchPrice = 8.0, decorativePrice = 20.0, fiveGallonPrice = 25.0;
 
-            var twoInchQty = parseInt(document.getElementById('twoInchQty').value) || 0;
-            var fourInchQty = parseInt(document.getElementById('fourInchQty').value) || 0;
-            var threePackQty = parseInt(document.getElementById('threePackQty').value) || 0;
-            var fourPackQty = parseInt(document.getElementById('fourPackQty').value) || 0;
-            var fiveHalfSixInchQty = parseInt(document.getElementById('fiveHalfSixInchQty').value) || 0;
-            var decorativeQty = parseInt(document.getElementById('decorativeQty').value) || 0;
-            var fiveGallonQty = parseInt(document.getElementById('fiveGallonQty').value) || 0;
+      var twoInchQty = parseInt(document.getElementById('twoInchQty').value) || 0,
+          fourInchQty = parseInt(document.getElementById('fourInchQty').value) || 0,
+          threePackQty = parseInt(document.getElementById('threePackQty').value) || 0,
+          fourPackQty = parseInt(document.getElementById('fourPackQty').value) || 0,
+          fiveHalfSixInchQty = parseInt(document.getElementById('fiveHalfSixInchQty').value) || 0,
+          decorativeQty = parseInt(document.getElementById('decorativeQty').value) || 0,
+          fiveGallonQty = parseInt(document.getElementById('fiveGallonQty').value) || 0;
 
-            var subtotal = (twoInchPrice * twoInchQty) + (fourInchPrice * fourInchQty) +
-                (threePackPrice * threePackQty) + (fourPackPrice * fourPackQty) +
-                (fiveHalfSixInchPrice * fiveHalfSixInchQty) + (decorativePrice * decorativeQty) +
-                (fiveGallonPrice * fiveGallonQty);
+      var subtotal = twoInchPrice * twoInchQty + fourInchPrice * fourInchQty +
+                     threePackPrice * threePackQty + fourPackPrice * fourPackQty +
+                     fiveHalfSixInchPrice * fiveHalfSixInchQty + decorativePrice * decorativeQty +
+                     fiveGallonPrice * fiveGallonQty;
 
-            var discountPerennial = document.getElementById('discountPerennial').checked ? 0.05 : 0;
-            var discountBlooming = document.getElementById('discountBlooming').checked ? 0.05 : 0;
-            var totalDiscount = discountPerennial + discountBlooming;
+      var discountPerennial = document.getElementById('discountPerennial').checked ? 0.05 : 0,
+          discountBlooming = document.getElementById('discountBlooming').checked ? 0.05 : 0,
+          totalDiscount = discountPerennial + discountBlooming,
+          discountAmount = subtotal * totalDiscount,
+          total = subtotal - discountAmount;
 
-            var total = subtotal - (subtotal * totalDiscount);
-            document.getElementById('total').innerText = "Total: $" + Math.floor(total);
-        }
-    </script>
+      // Display totals for each category
+      document.getElementById('twoInchTotal').innerText = "$" + (twoInchPrice * twoInchQty).toFixed(2);
+      document.getElementById('fourInchTotal').innerText = "$" + (fourInchPrice * fourInchQty).toFixed(2);
+      document.getElementById('threePackTotal').innerText = "$" + (threePackPrice * threePackQty).toFixed(2);
+      document.getElementById('fourPackTotal').innerText = "$" + (fourPackPrice * fourPackQty).toFixed(2);
+      document.getElementById('fiveHalfSixInchTotal').innerText = "$" + (fiveHalfSixInchPrice * fiveHalfSixInchQty).toFixed(2);
+      document.getElementById('decorativeTotal').innerText = "$" + (decorativePrice * decorativeQty).toFixed(2);
+      document.getElementById('fiveGallonTotal').innerText = "$" + (fiveGallonPrice * fiveGallonQty).toFixed(2);
+
+      // Display subtotal, discount, and grand total
+      document.getElementById('subtotal').innerText = "Subtotal: $" + subtotal.toFixed(2);
+      document.getElementById('discount').innerText = "Discount: -$" + discountAmount.toFixed(2);
+      document.getElementById('total').innerText = "Grand Total: $" + Math.floor(total);
+    }
+  </script>
 </head>
 <body>
-    <h1>PlantPass Calculator</h1>
-    <h2>Spring Plant Fair 2024</h2>
-    <form>
-        <div class="form-group"><label for="twoInchQty">2 inch $3.00:</label> <input type="number" id="twoInchQty" value="0"></div>
-        <div class="form-group"><label for="fourInchQty">4 inch $5.00:</label> <input type="number" id="fourInchQty" value="0"></div>
-        <div class="form-group"><label for="threePackQty">3 pack $5.00:</label> <input type="number" id="threePackQty" value="0"></div>
-        <div class="form-group"><label for="fourPackQty">4 pack $5.00:</label> <input type="number" id="fourPackQty" value="0"></div>
-        <div class="form-group"><label for="fiveHalfSixInchQty">5.5 inch / 6 inch $8.00:</label> <input type="number" id="fiveHalfSixInchQty" value="0"></div>
-        <div class="form-group"><label for="decorativeQty">Decorative $20.00:</label> <input type="number" id="decorativeQty" value="0"></div>
-        <div class="form-group"><label for="fiveGallonQty">5 gallon $25.00:</label> <input type="number" id="fiveGallonQty" value="0"></div>
-        <div class="form-group"><input type="checkbox" id="discountPerennial"> Perennial Powerhouse (5%)</div>
-        <div class="form-group"><input type="checkbox" id="discountBlooming"> Blooming Bundle (5%)</div>
-        <button type="button" onclick="calculateTotal()">Calculate</button>
-    </form>
-    <h2 id="total">Total: $0</h2>
+  <h1>PlantPass Calculator</h1>
+  <h2>Spring Plant Fair 2024</h2>
+  <form>
+    <div class="form-group">
+      <label for="twoInchQty">2 inch $3.00:</label>
+      <input type="number" id="twoInchQty" value="0" />
+      <span id="twoInchTotal">$0.00</span>
+    </div>
+    <div class="form-group">
+      <label for="fourInchQty">4 inch $5.00:</label>
+      <input type="number" id="fourInchQty" value="0" />
+      <span id="fourInchTotal">$0.00</span>
+    </div>
+    <div class="form-group">
+      <label for="threePackQty">3 pack $5.00:</label>
+      <input type="number" id="threePackQty" value="0" />
+      <span id="threePackTotal">$0.00</span>
+    </div>
+    <div class="form-group">
+      <label for="fourPackQty">4 pack $5.00:</label>
+      <input type="number" id="fourPackQty" value="0" />
+      <span id="fourPackTotal">$0.00</span>
+    </div>
+    <div class="form-group">
+      <label for="fiveHalfSixInchQty">5.5 inch / 6 inch $8.00:</label>
+      <input type="number" id="fiveHalfSixInchQty" value="0" />
+      <span id="fiveHalfSixInchTotal">$0.00</span>
+    </div>
+    <div class="form-group">
+      <label for="decorativeQty">Decorative $20.00:</label>
+      <input type="number" id="decorativeQty" value="0" />
+      <span id="decorativeTotal">$0.00</span>
+    </div>
+    <div class="form-group">
+      <label for="fiveGallonQty">5 gallon $25.00:</label>
+      <input type="number" id="fiveGallonQty" value="0" />
+      <span id="fiveGallonTotal">$0.00</span>
+    </div>
+    <div class="form-group">
+      <input type="checkbox" id="discountPerennial" /> Perennial Powerhouse (5%)
+    </div>
+    <div class="form-group">
+      <input type="checkbox" id="discountBlooming" /> Blooming Bundle (5%)
+    </div>
+    <button type="button" onclick="calculateTotal()">Calculate</button>
+    <h3 id="subtotal">Subtotal: $0.00</h3>
+    <h3 id="discount">Discount: -$0.00</h3>
+    <h3 id="total">Grand Total: $0</h3>
+  </form>
 </body>
 </html>

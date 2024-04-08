@@ -1,19 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Item Calculator</title>
+    <title>PlantPass Calculator</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: 400;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+    </style>
     <script>
         function calculateTotal() {
-            var aPrice = 3.00, bPrice = 4.00, cPrice = 5.00, dPrice = 7.00;
-            var aQty = parseInt(document.getElementById('aQty').value) || 0;
-            var bQty = parseInt(document.getElementById('bQty').value) || 0;
-            var cQty = parseInt(document.getElementById('cQty').value) || 0;
-            var dQty = parseInt(document.getElementById('dQty').value) || 0;
+            var twoInchPrice = 3.00, fourInchPrice = 5.00, threePackPrice = 5.00;
+            var fourPackPrice = 5.00, fiveHalfSixInchPrice = 8.00, decorativePrice = 20.00, fiveGallonPrice = 25.00;
 
-            var subtotal = (aPrice * aQty) + (bPrice * bQty) + (cPrice * cQty) + (dPrice * dQty);
-            var discountZ = document.getElementById('discountZ').checked ? 0.05 : 0;
-            var discountY = document.getElementById('discountY').checked ? 0.05 : 0;
-            var totalDiscount = discountZ + discountY;
+            var twoInchQty = parseInt(document.getElementById('twoInchQty').value) || 0;
+            var fourInchQty = parseInt(document.getElementById('fourInchQty').value) || 0;
+            var threePackQty = parseInt(document.getElementById('threePackQty').value) || 0;
+            var fourPackQty = parseInt(document.getElementById('fourPackQty').value) || 0;
+            var fiveHalfSixInchQty = parseInt(document.getElementById('fiveHalfSixInchQty').value) || 0;
+            var decorativeQty = parseInt(document.getElementById('decorativeQty').value) || 0;
+            var fiveGallonQty = parseInt(document.getElementById('fiveGallonQty').value) || 0;
+
+            var subtotal = (twoInchPrice * twoInchQty) + (fourInchPrice * fourInchQty) +
+                (threePackPrice * threePackQty) + (fourPackPrice * fourPackQty) +
+                (fiveHalfSixInchPrice * fiveHalfSixInchQty) + (decorativePrice * decorativeQty) +
+                (fiveGallonPrice * fiveGallonQty);
+
+            var discountPerennial = document.getElementById('discountPerennial').checked ? 0.05 : 0;
+            var discountBlooming = document.getElementById('discountBlooming').checked ? 0.05 : 0;
+            var totalDiscount = discountPerennial + discountBlooming;
 
             var total = subtotal - (subtotal * totalDiscount);
             document.getElementById('total').innerText = "Total: $" + Math.floor(total);
@@ -21,14 +50,18 @@
     </script>
 </head>
 <body>
-    <h1>Item Calculator</h1>
+    <h1>PlantPass Calculator</h1>
+    <h2>Spring Plant Fair 2024</h2>
     <form>
-        <label>Item A $3.00: <input type="number" id="aQty" value="0"></label><br>
-        <label>Item B $4.00: <input type="number" id="bQty" value="0"></label><br>
-        <label>Item C $5.00: <input type="number" id="cQty" value="0"></label><br>
-        <label>Item D $7.00: <input type="number" id="dQty" value="0"></label><br>
-        <input type="checkbox" id="discountZ"> Discount Z (5%)<br>
-        <input type="checkbox" id="discountY"> Discount Y (5%)<br>
+        <label>2 inch $3.00: <input type="number" id="twoInchQty" value="0"></label><br>
+        <label>4 inch $5.00: <input type="number" id="fourInchQty" value="0"></label><br>
+        <label>3 pack $5.00: <input type="number" id="threePackQty" value="0"></label><br>
+        <label>4 pack $5.00: <input type="number" id="fourPackQty" value="0"></label><br>
+        <label>5.5 inch / 6 inch $8.00: <input type="number" id="fiveHalfSixInchQty" value="0"></label><br>
+        <label>Decorative $20.00: <input type="number" id="decorativeQty" value="0"></label><br>
+        <label>5 gallon $25.00: <input type="number" id="fiveGallonQty" value="0"></label><br>
+        <input type="checkbox" id="discountPerennial"> Perennial Powerhouse (5%)<br>
+        <input type="checkbox" id="discountBlooming"> Blooming Bundle (5%)<br>
         <button type="button" onclick="calculateTotal()">Calculate</button>
     </form>
     <h2 id="total">Total: $0</h2>

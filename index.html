@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Item Calculator</title>
+    <script>
+        function calculateTotal() {
+            var aPrice = 3.00, bPrice = 4.00, cPrice = 5.00, dPrice = 7.00;
+            var aQty = parseInt(document.getElementById('aQty').value) || 0;
+            var bQty = parseInt(document.getElementById('bQty').value) || 0;
+            var cQty = parseInt(document.getElementById('cQty').value) || 0;
+            var dQty = parseInt(document.getElementById('dQty').value) || 0;
+
+            var subtotal = (aPrice * aQty) + (bPrice * bQty) + (cPrice * cQty) + (dPrice * dQty);
+            var discountZ = document.getElementById('discountZ').checked ? 0.05 : 0;
+            var discountY = document.getElementById('discountY').checked ? 0.05 : 0;
+            var totalDiscount = discountZ + discountY;
+
+            var total = subtotal - (subtotal * totalDiscount);
+            document.getElementById('total').innerText = "Total: $" + Math.floor(total);
+        }
+    </script>
+</head>
+<body>
+    <h1>Item Calculator</h1>
+    <form>
+        <label>Item A $3.00: <input type="number" id="aQty" value="0"></label><br>
+        <label>Item B $4.00: <input type="number" id="bQty" value="0"></label><br>
+        <label>Item C $5.00: <input type="number" id="cQty" value="0"></label><br>
+        <label>Item D $7.00: <input type="number" id="dQty" value="0"></label><br>
+        <input type="checkbox" id="discountZ"> Discount Z (5%)<br>
+        <input type="checkbox" id="discountY"> Discount Y (5%)<br>
+        <button type="button" onclick="calculateTotal()">Calculate</button>
+    </form>
+    <h2 id="total">Total: $0</h2>
+</body>
+</html>

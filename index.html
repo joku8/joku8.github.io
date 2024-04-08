@@ -18,6 +18,19 @@
             font-weight: 400;
         }
 
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: inline-block;
+            width: 150px;
+        }
+
+        .form-group input[type="number"] {
+            width: 50px;
+        }
+
         form {
             margin-top: 20px;
         }
@@ -53,15 +66,15 @@
     <h1>PlantPass Calculator</h1>
     <h2>Spring Plant Fair 2024</h2>
     <form>
-        <label>2 inch $3.00: <input type="number" id="twoInchQty" value="0"></label><br>
-        <label>4 inch $5.00: <input type="number" id="fourInchQty" value="0"></label><br>
-        <label>3 pack $5.00: <input type="number" id="threePackQty" value="0"></label><br>
-        <label>4 pack $5.00: <input type="number" id="fourPackQty" value="0"></label><br>
-        <label>5.5 inch / 6 inch $8.00: <input type="number" id="fiveHalfSixInchQty" value="0"></label><br>
-        <label>Decorative $20.00: <input type="number" id="decorativeQty" value="0"></label><br>
-        <label>5 gallon $25.00: <input type="number" id="fiveGallonQty" value="0"></label><br>
-        <input type="checkbox" id="discountPerennial"> Perennial Powerhouse (5%)<br>
-        <input type="checkbox" id="discountBlooming"> Blooming Bundle (5%)<br>
+        <div class="form-group"><label for="twoInchQty">2 inch $3.00:</label> <input type="number" id="twoInchQty" value="0"></div>
+        <div class="form-group"><label for="fourInchQty">4 inch $5.00:</label> <input type="number" id="fourInchQty" value="0"></div>
+        <div class="form-group"><label for="threePackQty">3 pack $5.00:</label> <input type="number" id="threePackQty" value="0"></div>
+        <div class="form-group"><label for="fourPackQty">4 pack $5.00:</label> <input type="number" id="fourPackQty" value="0"></div>
+        <div class="form-group"><label for="fiveHalfSixInchQty">5.5 inch / 6 inch $8.00:</label> <input type="number" id="fiveHalfSixInchQty" value="0"></div>
+        <div class="form-group"><label for="decorativeQty">Decorative $20.00:</label> <input type="number" id="decorativeQty" value="0"></div>
+        <div class="form-group"><label for="fiveGallonQty">5 gallon $25.00:</label> <input type="number" id="fiveGallonQty" value="0"></div>
+        <div class="form-group"><input type="checkbox" id="discountPerennial"> Perennial Powerhouse (5%)</div>
+        <div class="form-group"><input type="checkbox" id="discountBlooming"> Blooming Bundle (5%)</div>
         <button type="button" onclick="calculateTotal()">Calculate</button>
     </form>
     <h2 id="total">Total: $0</h2>

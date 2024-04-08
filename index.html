@@ -1,164 +1,197 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>PlantPass Calculator</title>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      margin: 0;
-      padding: 0 5px;
-      box-sizing: border-box;
-      background-color: #f4f4f4;
-    }
+  <head>
+    <title>PlantPass Calculator</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        margin: 0;
+        padding: 0 5px;
+        box-sizing: border-box;
+        background-color: #f4f4f4;
+      }
 
-    h1, h2, h3 {
-      text-align: center;
-      margin: 10px 0;
-    }
+      h1,
+      h2,
+      h3 {
+        text-align: center;
+        margin: 10px 0;
+      }
 
-    h1 {
-      font-size: 24px;
-      font-weight: 700;
-    }
+      h1 {
+        font-size: 24px;
+        font-weight: 700;
+      }
 
-    h2, h3 {
-      font-size: 20px;
-      font-weight: 400;
-    }
+      h2,
+      h3 {
+        font-size: 20px;
+        font-weight: 400;
+      }
 
-    .form-group {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-    }
+      .form-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
 
-    .form-group label {
-      flex-basis: 60%;
-    }
+      .form-group label {
+        flex-basis: 60%;
+      }
 
-    .form-group input[type="number"] {
-      flex-basis: 20%;
-      padding: 5px;
-    }
+      .form-group input[type="number"] {
+        flex-basis: 20%;
+        padding: 5px;
+      }
 
-    .form-group span {
-      flex-basis: 20%;
-      text-align: right;
-    }
+      .form-group span {
+        flex-basis: 20%;
+        text-align: right;
+      }
 
-    button {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+      button {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
 
-    button:hover {
-      background-color: #45a049;
-    }
+      button:hover {
+        background-color: #45a049;
+      }
 
-    form {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-  </style>
-  <script>
-    function calculateTotal() {
-      var prices = {
-        twoInch: 3.0,
-        fourInch: 5.0,
-        threePack: 5.0,
-        fourPack: 5.0,
-        fiveHalfSixInch: 8.0,
-        decorative: 20.0,
-        fiveGallon: 25.0
-      };
+      form {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+    <script>
+      function calculateTotal() {
+        var prices = {
+          twoInch: 3.0,
+          fourInch: 5.0,
+          threePack: 5.0,
+          fourPack: 5.0,
+          fiveHalfSixInch: 8.0,
+          decorative: 20.0,
+          fiveGallon: 25.0,
+        };
 
-      var quantities = {
-        twoInch: parseInt(document.getElementById('twoInchQty').value) || 0,
-        fourInch: parseInt(document.getElementById('fourInchQty').value) || 0,
-        threePack: parseInt(document.getElementById('threePackQty').value) || 0,
-        fourPack: parseInt(document.getElementById('fourPackQty').value) || 0,
-        fiveHalfSixInch: parseInt(document.getElementById('fiveHalfSixInchQty').value) || 0,
-        decorative: parseInt(document.getElementById('decorativeQty').value) || 0,
-        fiveGallon: parseInt(document.getElementById('fiveGallonQty').value) || 0
-      };
+        var quantities = {
+          twoInch: parseInt(document.getElementById("twoInchQty").value) || 0,
+          fourInch: parseInt(document.getElementById("fourInchQty").value) || 0,
+          threePack:
+            parseInt(document.getElementById("threePackQty").value) || 0,
+          fourPack: parseInt(document.getElementById("fourPackQty").value) || 0,
+          fiveHalfSixInch:
+            parseInt(document.getElementById("fiveHalfSixInchQty").value) || 0,
+          decorative:
+            parseInt(document.getElementById("decorativeQty").value) || 0,
+          fiveGallon:
+            parseInt(document.getElementById("fiveGallonQty").value) || 0,
+        };
 
-      var subtotal = Object.keys(prices).reduce((acc, key) => acc + (prices[key] * quantities[key]), 0);
-      var discountPerennial = document.getElementById('discountPerennial').checked ? 0.05 : 0;
-      var discountBlooming = document.getElementById('discountBlooming').checked ? 0.05 : 0;
-      var totalDiscount = discountPerennial + discountBlooming;
-      var discountAmount = subtotal * totalDiscount;
-      var total = subtotal - discountAmount;
+        var totalItems = Object.values(quantities).reduce(
+          (acc, quantity) => acc + quantity,
+          0
+        );
+        var subtotal = Object.keys(prices).reduce(
+          (acc, key) => acc + prices[key] * quantities[key],
+          0
+        );
 
-      Object.keys(prices).forEach(item => {
-        document.getElementById(item + 'Total').innerText = "$" + (prices[item] * quantities[item]).toFixed(2);
-      });
+        var discountPerennial = document.getElementById("discountPerennial")
+          .checked
+          ? 0.05
+          : 0;
+        var discountBlooming = totalItems >= 20 ? 0.05 : 0;
+        var totalDiscount = discountPerennial + discountBlooming;
+        var discountAmount = subtotal * totalDiscount;
+        var total = subtotal - discountAmount;
 
-      document.getElementById('subtotal').innerText = "Subtotal: $" + subtotal.toFixed(2);
-      document.getElementById('discount').innerText = "Discount: -$" + discountAmount.toFixed(2);
-      document.getElementById('total').innerText = "Grand Total: $" + Math.floor(total);
-    }
-  </script>
-</head>
-<body>
-  <h1>PlantPass Calculator</h1>
-  <h2>Spring Plant Fair 2024</h2>
-  <form>
-    <div class="form-group">
-      <label for="twoInchQty">2 inch $3.00:</label>
-      <input type="number" id="twoInchQty" value="0" />
-      <span id="twoInchTotal">$0.00</span>
-    </div>
-    <div class="form-group">
-      <label for="fourInchQty">4 inch $5.00:</label>
-      <input type="number" id="fourInchQty" value="0" />
-      <span id="fourInchTotal">$0.00</span>
-    </div>
-    <div class="form-group">
-      <label for="threePackQty">3 pack $5.00:</label>
-      <input type="number" id="threePackQty" value="0" />
-      <span id="threePackTotal">$0.00</span>
-    </div>
-    <div class="form-group">
-      <label for="fourPackQty">4 pack $5.00:</label>
-      <input type="number" id="fourPackQty" value="0" />
-      <span id="fourPackTotal">$0.00</span>
-    </div>
-    <div class="form-group">
-      <label for="fiveHalfSixInchQty">5.5 inch / 6 inch $8.00:</label>
-      <input type="number" id="fiveHalfSixInchQty" value="0" />
-      <span id="fiveHalfSixInchTotal">$0.00</span>
-    </div>
-    <div class="form-group">
-      <label for="decorativeQty">Decorative $20.00:</label>
-      <input type="number" id="decorativeQty" value="0" />
-      <span id="decorativeTotal">$0.00</span>
-    </div>
-    <div class="form-group">
-      <label for="fiveGallonQty">5 gallon $25.00:</label>
-      <input type="number" id="fiveGallonQty" value="0" />
-      <span id="fiveGallonTotal">$0.00</span>
-    </div>
-    <div class="form-group">
-      <input type="checkbox" id="discountPerennial" /> Perennial Powerhouse (5%)
-    </div>
-    <div class="form-group">
-      <input type="checkbox" id="discountBlooming" /> Blooming Bundle (5%)
-    </div>
-    <button type="button" onclick="calculateTotal()">Calculate</button>
-    <h3 id="subtotal">Subtotal: $0.00</h3>
-    <h3 id="discount">Discount: -$0.00</h3>
-    <h3 id="total">Grand Total: $0</h3>
-  </form>
-</body>
+        Object.keys(prices).forEach((item) => {
+          document.getElementById(item + "Total").innerText =
+            "$" + (prices[item] * quantities[item]).toFixed(2);
+        });
+
+        document.getElementById("subtotal").innerText =
+          "Subtotal: $" + subtotal.toFixed(2);
+        document.getElementById("discount").innerText =
+          "Discount: -$" + discountAmount.toFixed(2);
+        document.getElementById("total").innerText =
+          "Grand Total: $" + Math.floor(total);
+        document.getElementById("bloomingStatus").innerText =
+          totalItems >= 20 ? "Automatically Applied" : "Not Applied";
+      }
+    </script>
+  </head>
+  <body>
+    <h1>PlantPass Calculator</h1>
+    <h2>Spring Plant Fair 2024</h2>
+    <form>
+      <div class="form-group">
+        <label for="twoInchQty">2 inch $3.00:</label>
+        <input type="number" id="twoInchQty" value="0" />
+        <span id="twoInchTotal">$0.00</span>
+      </div>
+      <div class="form-group">
+        <label for="fourInchQty">4 inch $5.00:</label>
+        <input type="number" id="fourInchQty" value="0" />
+        <span id="fourInchTotal">$0.00</span>
+      </div>
+      <div class="form-group">
+        <label for="threePackQty">3 pack $5.00:</label>
+        <input type="number" id="threePackQty" value="0" />
+        <span id="threePackTotal">$0.00</span>
+      </div>
+      <div class="form-group">
+        <label for="fourPackQty">4 pack $5.00:</label>
+        <input type="number" id="fourPackQty" value="0" />
+        <span id="fourPackTotal">$0.00</span>
+      </div>
+      <div class="form-group">
+        <label for="fiveHalfSixInchQty">5.5 inch / 6 inch $8.00:</label>
+        <input type="number" id="fiveHalfSixInchQty" value="0" />
+        <span id="fiveHalfSixInchTotal">$0.00</span>
+      </div>
+      <div class="form-group">
+        <label for="decorativeQty">Decorative $20.00:</label>
+        <input type="number" id="decorativeQty" value="0" />
+        <span id="decorativeTotal">$0.00</span>
+      </div>
+      <div class="form-group">
+        <label for="fiveGallonQty">5 gallon $25.00:</label>
+        <input type="number" id="fiveGallonQty" value="0" />
+        <span id="fiveGallonTotal">$0.00</span>
+      </div>
+      <div class="form-group">
+        <input
+          type="checkbox"
+          id="discountPerennial"
+          onchange="calculateTotal()"
+        />
+        Perennial Powerhouse (5%)
+      </div>
+      <div class="form-group">
+        <span id="bloomingStatus">Not Applied</span>
+        <label>Blooming Bundle (5%)</label>
+      </div>
+      <button type="button" onclick="calculateTotal()">Calculate</button>
+      <h3 id="subtotal">Subtotal: $0.00</h3>
+      <h3 id="discount">Discount: -$0.00</h3>
+      <h3 id="total">Grand Total: $0</h3>
+    </form>
+  </body>
 </html>

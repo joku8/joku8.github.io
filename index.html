@@ -55,6 +55,22 @@
         text-align: right;
       }
 
+      .discount-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .discount-status {
+        flex-basis: 50%;
+        text-align: left;
+      }
+
+      .discount-label {
+        flex-basis: 50%;
+        text-align: right;
+      }
+
       button {
         width: 100%;
         padding: 10px;
@@ -184,10 +200,12 @@
         />
         Perennial Powerhouse (5%)
       </div>
-      <div class="form-group">
-        <span id="bloomingStatus">Not Applied</span>
-        <label>Blooming Bundle (5%)</label>
+      <div class="discount-group">
+        <span id="bloomingStatus" class="discount-status">Not Applied</span>
+        <label class="discount-label">Blooming Bundle (5%)</label>
       </div>
+
+      <!-- Calculate button and totals display -->
       <button type="button" onclick="calculateTotal()">Calculate</button>
       <h3 id="subtotal">Subtotal: $0.00</h3>
       <h3 id="discount">Discount: -$0.00</h3>

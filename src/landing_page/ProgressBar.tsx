@@ -3,9 +3,10 @@ import React, { useState, useEffect } from "react";
 interface ProgressBarProps {
   isFilling: boolean;
   onComplete: () => void;
-  left: number; // Dynamically set left position
-  width: number; // Dynamically set width
-  top: string; // Dynamically set top position
+  left: number;
+  width: number;
+  top: string;
+  freeze?: boolean; // New prop to freeze progress bar
 }
 
 const ProgressBar: React.FC<ProgressBarProps> = ({
@@ -14,10 +15,13 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   left,
   width,
   top,
+  freeze = false,
 }) => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    if (freeze) return; // Freeze the progress bar if needed
+
     let interval: ReturnType<typeof setInterval> | null = null;
 
     if (isFilling) {
@@ -38,7 +42,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isFilling, onComplete]);
+  }, [isFilling, onComplete, freeze]);
 
   return (
     <div
@@ -75,8 +79,8 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
           style={{
             width: `${progress}%`,
             height: "100%",
-            backgroundColor: "#4caf50",
-            transition: isFilling ? "width 0.1s linear" : "none",
+            backgroundColor: "#4caf50", // Green when frozen or filling
+            transition: "width 0.1s linear",
           }}
         />
       </div>

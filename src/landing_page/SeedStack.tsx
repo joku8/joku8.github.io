@@ -8,10 +8,11 @@ interface SeedPacket {
 }
 
 interface SeedStackProps {
-  setProgressActive: (isActive: boolean) => void; // Function to toggle progress bar state
+  setProgressActive: (isActive: boolean) => void;
+  freeze: boolean; // Disable interactions if true
 }
 
-const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive }) => {
+const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze }) => {
   const seedHeight = 0.3 * window.innerHeight; // 30% of viewport height
   const seedWidth = seedHeight * (1 / 1.5); // Maintain aspect ratio 1:1.5
   const basePosition = {
@@ -74,6 +75,8 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive }) => {
   );
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>, id: string) => {
+    if (freeze) return; // Disable interaction when frozen
+
     e.preventDefault();
 
     const rect = seedRefs.current[id]!.getBoundingClientRect();
@@ -94,6 +97,8 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive }) => {
   };
 
   const handleMouseMove = (e: MouseEvent) => {
+    if (freeze) return; // Disable dragging when frozen
+
     const draggingId = draggingRef.current.id;
     if (!draggingId) return;
 
@@ -131,6 +136,22 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive }) => {
   };
 
   const handleMouseUp = () => {
+    if (freeze) {
+      // Reset all seed packets to their original position
+      Object.keys(seedRefs.current).forEach((id) => {
+        const seed = seedRefs.current[id];
+        const originalPosition = seeds.find(
+          (s) => s.id === id
+        )!.originalPosition;
+
+        if (seed) {
+          seed.style.top = `${originalPosition.top}px`;
+          seed.style.left = `${originalPosition.left}px`;
+          seed.style.transform = "rotate(0deg)";
+        }
+      });
+      return;
+    }
     const draggingId = draggingRef.current.id;
     if (!draggingId) return;
 
@@ -169,6 +190,7 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive }) => {
   };
 
   const handleMouseEnter = (id: string) => {
+    if (freeze) return;
     setHoveredSeed(id);
   };
 

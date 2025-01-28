@@ -36,8 +36,11 @@ const useTypewriter = (
 
 const LandingPage: React.FC = () => {
   const [isProgressActive, setIsProgressActive] = useState(false);
+  const [isProgressComplete, setIsProgressComplete] = useState(false);
   const [isFirstLineDone, setIsFirstLineDone] = useState(false);
+  const [isSecondLineDone, setIsSecondLineDone] = useState(false);
 
+  // Typewriter effects
   const { displayText: line1, showCursor: showCursor1 } = useTypewriter(
     "Welcome to Joe's Garden!",
     100,
@@ -46,10 +49,16 @@ const LandingPage: React.FC = () => {
 
   const { displayText: line2, showCursor: showCursor2 } = useTypewriter(
     isFirstLineDone ? "Sow some seeds to begin..." : "",
+    100,
+    () => setIsSecondLineDone(true)
+  );
+
+  const { displayText: line3, showCursor: showCursor3 } = useTypewriter(
+    isSecondLineDone && isProgressComplete ? "Planting Complete..." : "",
     100
   );
 
-  // **Dynamic Calculations**
+  // Dynamic calculations
   const viewportWidth = window.innerWidth;
   const sunWidth = 0.12 * viewportWidth; // Sun image width (12% of viewport width)
   const seedPacketWidth = 0.3 * window.innerHeight * (1 / 1.5); // Seed packet width
@@ -59,7 +68,7 @@ const LandingPage: React.FC = () => {
   const progressBarWidth = progressBarRight - progressBarLeft;
 
   const handleProgressComplete = () => {
-    console.log("Progress Bar Complete!");
+    setIsProgressComplete(true); // Set the progress to complete
   };
 
   return (
@@ -71,6 +80,7 @@ const LandingPage: React.FC = () => {
         margin: 0,
         overflow: "hidden",
         position: "relative",
+        userSelect: "none", // Disable text selection for the entire page
       }}
     >
       {/* Welcome Text - Left aligned with Progress Bar */}
@@ -84,25 +94,35 @@ const LandingPage: React.FC = () => {
           color: "darkgreen",
           textAlign: "left",
           lineHeight: "1.5",
+          userSelect: "none",
         }}
       >
         <div>
           {line1}
-          {isFirstLineDone ? "" : showCursor1 ? "|" : ""}
+          {!isFirstLineDone && showCursor1 ? "|" : ""}
         </div>
         <div>
           {line2}
-          {isFirstLineDone && showCursor2 ? "|" : ""}
+          {isFirstLineDone &&
+          (!isSecondLineDone || showCursor2) &&
+          !isProgressComplete
+            ? "|"
+            : ""}
+        </div>
+        <div>
+          {line3}
+          {isSecondLineDone && isProgressComplete && showCursor3 ? "|" : ""}
         </div>
       </div>
 
-      {/* Progress Bar - Dynamically Positioned */}
+      {/* Progress Bar */}
       <ProgressBar
         isFilling={isProgressActive}
         onComplete={handleProgressComplete}
         left={progressBarLeft}
         width={progressBarWidth}
-        top={"5vh"} // Set top position to 5% of viewport height
+        top={"5vh"}
+        freeze={isProgressComplete}
       />
 
       {/* Sun image */}
@@ -120,10 +140,13 @@ const LandingPage: React.FC = () => {
         }}
       />
 
-      {/* Seed Stack Component */}
-      <SeedStack setProgressActive={setIsProgressActive} />
+      {/* Seed Stack */}
+      <SeedStack
+        setProgressActive={setIsProgressActive}
+        freeze={isProgressComplete}
+      />
 
-      {/* Soil image at the bottom */}
+      {/* Soil image */}
       <div
         style={{
           position: "absolute",

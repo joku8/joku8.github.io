@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from "react";
 
 interface ProgressBarProps {
-  isFilling: boolean; // Whether the progress bar is actively filling
-  onComplete: () => void; // Callback when the progress bar completes
+  isFilling: boolean;
+  onComplete: () => void;
+  left: number; // Dynamically set left position
+  width: number; // Dynamically set width
+  top: string; // Dynamically set top position
 }
 
-const ProgressBar: React.FC<ProgressBarProps> = ({ isFilling, onComplete }) => {
-  const [progress, setProgress] = useState(0); // Progress percentage (0 to 100)
+const ProgressBar: React.FC<ProgressBarProps> = ({
+  isFilling,
+  onComplete,
+  left,
+  width,
+  top,
+}) => {
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout | null = null;
+    let interval: ReturnType<typeof setInterval> | null = null;
 
     if (isFilling) {
       interval = setInterval(() => {
@@ -19,11 +28,11 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ isFilling, onComplete }) => {
             onComplete();
             return 100;
           }
-          return prev + 5; // Fills over 5 seconds (100 / 2 = 50 iterations, 100ms each)
+          return prev + 5;
         });
       }, 100);
     } else {
-      setProgress(0); // Reset progress when not filling
+      setProgress(0);
     }
 
     return () => {
@@ -35,23 +44,42 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ isFilling, onComplete }) => {
     <div
       style={{
         position: "absolute",
-        top: 20, // Top center
-        left: "15%", // Starts from 12.5% to make it centered in the middle 75%
-        width: "70%",
-        height: "10px",
-        backgroundColor: "#ddd",
-        borderRadius: "5px",
-        overflow: "hidden",
+        top: top,
+        left: `${left}px`,
+        width: `${width}px`,
+        textAlign: "center",
       }}
     >
+      {/* Title */}
       <div
         style={{
-          width: `${progress}%`,
-          height: "100%",
-          backgroundColor: "#4caf50", // Green progress bar
-          transition: isFilling ? "width 0.1s linear" : "none",
+          fontSize: "16px",
+          fontWeight: "bold",
+          marginBottom: "5px",
         }}
-      />
+      >
+        Planting Progress
+      </div>
+
+      {/* Progress Bar */}
+      <div
+        style={{
+          width: "100%",
+          height: "10px",
+          backgroundColor: "#ddd",
+          borderRadius: "5px",
+          overflow: "hidden",
+        }}
+      >
+        <div
+          style={{
+            width: `${progress}%`,
+            height: "100%",
+            backgroundColor: "#4caf50",
+            transition: isFilling ? "width 0.1s linear" : "none",
+          }}
+        />
+      </div>
     </div>
   );
 };

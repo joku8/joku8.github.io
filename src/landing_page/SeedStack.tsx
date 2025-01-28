@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 interface SeedPacket {
   id: string;
@@ -27,24 +27,36 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive }) => {
     {}
   );
 
+  const [hoveredSeed, setHoveredSeed] = useState<string | null>(null);
+  const [selectedSeed, setSelectedSeed] = useState<string | null>(null);
+
   const [seeds] = React.useState<SeedPacket[]>([
     {
       id: "carrot",
       image: "/artifacts/carrot_seed_packet.png",
       zIndex: 3,
-      originalPosition: { ...basePosition, top: basePosition.top + 70 },
+      originalPosition: {
+        ...basePosition,
+        top: basePosition.top + 0.1 * window.innerHeight, // Offset by 10% of viewport height
+      },
     },
     {
       id: "cucumber",
       image: "/artifacts/cucumber_seed_packet.png",
       zIndex: 2,
-      originalPosition: { ...basePosition, top: basePosition.top + 35 },
+      originalPosition: {
+        ...basePosition,
+        top: basePosition.top + 0.05 * window.innerHeight, // Offset by 5% of viewport height
+      },
     },
     {
       id: "tomato",
       image: "/artifacts/tomato_seed_packet.png",
       zIndex: 1,
-      originalPosition: { ...basePosition },
+      originalPosition: {
+        ...basePosition,
+        top: basePosition.top, // No offset
+      },
     },
   ]);
 
@@ -77,6 +89,8 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive }) => {
         seed.zIndex = Math.max(...seeds.map((s) => s.zIndex)) + 1;
       }
     });
+
+    setSelectedSeed(id); // Mark this seed as selected
   };
 
   const handleMouseMove = (e: MouseEvent) => {
@@ -112,7 +126,7 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive }) => {
       seedElement.style.left = `${newLeft}px`;
       seedElement.style.transform = `rotate(${
         rotationRef.current[draggingId] || 0
-      }deg)`;
+      }deg) scale(1.15)`; // Keep enlarged while dragging
     }
   };
 
@@ -131,12 +145,13 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive }) => {
         "top 0.3s ease, left 0.3s ease, transform 0.3s ease";
       seedElement.style.top = `${originalPosition.top}px`;
       seedElement.style.left = `${originalPosition.left}px`;
-      seedElement.style.transform = "rotate(0deg)";
+      seedElement.style.transform = "rotate(0deg) scale(1)"; // Reset size after release
     }
 
     positionsRef.current[draggingId] = originalPosition;
     rotationRef.current[draggingId] = 0;
     setProgressActive(false);
+    setSelectedSeed(null); // Deselect the seed
 
     // Reset z-index to the original value
     seeds.forEach((seed) => {
@@ -151,6 +166,14 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive }) => {
     setTimeout(() => {
       if (seedElement) seedElement.style.transition = "";
     }, 300);
+  };
+
+  const handleMouseEnter = (id: string) => {
+    setHoveredSeed(id);
+  };
+
+  const handleMouseLeave = (id: string) => {
+    setHoveredSeed((current) => (current === id ? null : current));
   };
 
   useEffect(() => {
@@ -171,7 +194,10 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive }) => {
           ref={(el) => (seedRefs.current[seed.id] = el)}
           style={{
             position: "absolute",
-            top: seed.originalPosition.top,
+            top:
+              hoveredSeed === seed.id && !selectedSeed
+                ? seed.originalPosition.top - 0.05 * seedHeight // Hover effect: rise by 10% of height
+                : seed.originalPosition.top,
             left: seed.originalPosition.left,
             zIndex: seed.zIndex,
             height: seedHeight,
@@ -180,10 +206,15 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive }) => {
             backgroundSize: "contain",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
-            transform: `rotate(${rotationRef.current[seed.id] || 0}deg)`,
+            transform: `rotate(${rotationRef.current[seed.id] || 0}deg) ${
+              selectedSeed === seed.id ? "scale(1.15)" : "scale(1)" // Enlarge when selected
+            }`,
+            transition: "top 0.4s ease, transform 0.3s ease", // Slower hover rise
             cursor: "grab",
           }}
           onMouseDown={(e) => handleMouseDown(e, seed.id)}
+          onMouseEnter={() => handleMouseEnter(seed.id)}
+          onMouseLeave={() => handleMouseLeave(seed.id)}
         ></div>
       ))}
     </>

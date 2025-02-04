@@ -18,31 +18,40 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   freeze = false,
 }) => {
   const [progress, setProgress] = useState(0);
+  const [isComplete, setIsComplete] = useState(false); // Local state to track completion
 
   useEffect(() => {
     if (freeze) return; // Freeze the progress bar if needed
 
     let interval: ReturnType<typeof setInterval> | null = null;
 
-    if (isFilling) {
+    if (isFilling && !isComplete) {
       interval = setInterval(() => {
         setProgress((prev) => {
           if (prev >= 100) {
             clearInterval(interval!);
-            onComplete();
+            setIsComplete(true);
             return 100;
           }
           return prev + 5;
         });
       }, 100);
-    } else {
+    } else if (!isFilling) {
       setProgress(0);
+      setIsComplete(false);
     }
 
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isFilling, onComplete, freeze]);
+  }, [isFilling, freeze, isComplete]);
+
+  // 🔹 Call `onComplete` in `useEffect` to prevent state updates during render
+  useEffect(() => {
+    if (isComplete) {
+      onComplete(); // Notify parent only when progress reaches 100%
+    }
+  }, [isComplete, onComplete]);
 
   return (
     <div

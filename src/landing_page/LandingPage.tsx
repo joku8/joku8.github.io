@@ -1,86 +1,52 @@
 import React, { useState, useEffect } from "react";
 import SeedStack from "./SeedStack";
 import ProgressBar from "./ProgressBar";
+import Typewriter from "./Typewriter";
 
-// Typewriter Hook with Moving Cursor
-const useTypewriter = (
-  text: string,
-  speed: number = 100,
-  onComplete?: () => void
-) => {
-  const [displayText, setDisplayText] = useState("");
-  const [index, setIndex] = useState(0);
-  const [showCursor, setShowCursor] = useState(true);
+interface LandingPageProps {
+  setShowPortfolio: (value: boolean) => void;
+}
 
-  useEffect(() => {
-    if (index < text.length) {
-      const timeout = setTimeout(() => {
-        setDisplayText((prev) => prev + text.charAt(index));
-        setIndex((prevIndex) => prevIndex + 1);
-      }, speed);
-      return () => clearTimeout(timeout);
-    } else if (onComplete) {
-      onComplete();
-    }
-  }, [index, text, speed, onComplete]);
-
-  useEffect(() => {
-    const cursorInterval = setInterval(() => {
-      setShowCursor((prev) => !prev);
-    }, 500);
-    return () => clearInterval(cursorInterval);
-  }, []);
-
-  return { displayText, showCursor };
-};
-
-const LandingPage: React.FC = () => {
+const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
   const [isProgressActive, setIsProgressActive] = useState(false);
   const [isProgressComplete, setIsProgressComplete] = useState(false);
   const [isFirstLineDone, setIsFirstLineDone] = useState(false);
   const [isSecondLineDone, setIsSecondLineDone] = useState(false);
+  const [isThirdLineDone, setIsThirdLineDone] = useState(false);
+  const [fadeOut, setFadeOut] = useState(false);
 
-  // Typewriter effects
-  const { displayText: line1, showCursor: showCursor1 } = useTypewriter(
-    "Welcome to Joe's Garden!",
-    100,
-    () => setIsFirstLineDone(true)
-  );
+  useEffect(() => {
+    if (isThirdLineDone) {
+      const timer = setTimeout(() => {
+        setFadeOut(true);
+        setTimeout(() => {
+          setShowPortfolio(true);
+        }, 1000); // 1-second fade effect
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [isThirdLineDone, setShowPortfolio]);
 
-  const { displayText: line2, showCursor: showCursor2 } = useTypewriter(
-    isFirstLineDone ? "Sow some seeds to begin..." : "",
-    100,
-    () => setIsSecondLineDone(true)
-  );
-
-  const { displayText: line3, showCursor: showCursor3 } = useTypewriter(
-    isSecondLineDone && isProgressComplete ? "Planting Complete..." : "",
-    100
-  );
-
-  // Dynamic calculations
   const viewportWidth = window.innerWidth;
-  const sunWidth = 0.12 * viewportWidth; // Sun image width (12% of viewport width)
-  const seedPacketWidth = 0.3 * window.innerHeight * (1 / 1.5); // Seed packet width
+  const sunWidth = 0.12 * viewportWidth;
+  const seedPacketWidth = 0.3 * window.innerHeight * (1 / 1.5);
 
-  const progressBarLeft = sunWidth + 30; // Leaves 30px gap from the sun
-  const progressBarRight = viewportWidth - seedPacketWidth - 30; // Leaves 30px gap from the seed packets
+  const progressBarLeft = sunWidth + 30;
+  const progressBarRight = viewportWidth - seedPacketWidth - 30;
   const progressBarWidth = progressBarRight - progressBarLeft;
-
-  const handleProgressComplete = () => {
-    setIsProgressComplete(true); // Set the progress to complete
-  };
 
   return (
     <div
       style={{
-        backgroundColor: "#87ceeb",
+        backgroundColor: fadeOut ? "#ffffff" : "#87ceeb", // Fades to white
         height: "100vh",
         width: "100vw",
         margin: 0,
         overflow: "hidden",
         position: "relative",
-        userSelect: "none", // Disable text selection for the entire page
+        userSelect: "none",
+        transition: "background-color 1s ease-in-out, opacity 1s ease-in-out",
+        opacity: fadeOut ? 0 : 1,
       }}
     >
       {/* Welcome Text - Left aligned with Progress Bar */}
@@ -91,41 +57,55 @@ const LandingPage: React.FC = () => {
           left: `${progressBarLeft}px`,
           fontFamily: "'Courier New', Courier, monospace",
           fontSize: "5vh",
-          color: "darkgreen",
+          color: "darkgreen", // No fading, remains dark green
           textAlign: "left",
           lineHeight: "1.5",
           userSelect: "none",
         }}
       >
+        {/* Line 1 */}
         <div>
-          {line1}
-          {!isFirstLineDone && showCursor1 ? "|" : ""}
+          <Typewriter
+            text="Welcome to Joe's Garden!"
+            onComplete={() => setIsFirstLineDone(true)}
+            hideCursor={isFirstLineDone} // Hides cursor only when Line 2 starts
+          />
         </div>
+
+        {/* Line 2 */}
         <div>
-          {line2}
-          {isFirstLineDone &&
-          (!isSecondLineDone || showCursor2) &&
-          !isProgressComplete
-            ? "|"
-            : ""}
+          {isFirstLineDone && (
+            <Typewriter
+              text="Sow some seeds to begin..."
+              onComplete={() => setIsSecondLineDone(true)}
+              hideCursor={isProgressComplete} // Hides cursor only when Line 3 starts
+            />
+          )}
         </div>
+
+        {/* Line 3 */}
         <div>
-          {line3}
-          {isSecondLineDone && isProgressComplete && showCursor3 ? "|" : ""}
+          {isSecondLineDone && isProgressComplete && (
+            <Typewriter
+              text="Planting Complete..."
+              onComplete={() => setIsThirdLineDone(true)}
+              hideCursor={false} // Cursor remains blinking after final line finishes
+            />
+          )}
         </div>
       </div>
 
       {/* Progress Bar */}
       <ProgressBar
         isFilling={isProgressActive}
-        onComplete={handleProgressComplete}
+        onComplete={() => setIsProgressComplete(true)}
         left={progressBarLeft}
         width={progressBarWidth}
         top={"5vh"}
         freeze={isProgressComplete}
       />
 
-      {/* Sun image */}
+      {/* Sun image (Always visible) */}
       <div
         style={{
           position: "absolute",
@@ -146,7 +126,7 @@ const LandingPage: React.FC = () => {
         freeze={isProgressComplete}
       />
 
-      {/* Soil image */}
+      {/* Soil Layer (Always visible) */}
       <div
         style={{
           position: "absolute",

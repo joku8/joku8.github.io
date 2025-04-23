@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import SeedStack from "./SeedStack";
 import ProgressBar from "./ProgressBar";
 import Typewriter from "./Typewriter";
+import ContinueSign from "./ContinueSign";
 
 interface LandingPageProps {
   setShowPortfolio: (value: boolean) => void;
@@ -14,6 +15,22 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
   const [isSecondLineDone, setIsSecondLineDone] = useState(false);
   const [isThirdLineDone, setIsThirdLineDone] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
+
+  useEffect(() => {
+    const isMobile = /Mobi|Android|iPhone|iPad|iPod/.test(navigator.userAgent) || window.innerWidth < 768;
+    
+    if (isMobile) {
+      setShowPortfolio(true); // Bypass landing page for mobile devices
+    }
+  }, [setShowPortfolio]);
+  
+
+  const handleSignClick = () => {
+    setFadeOut(true);
+    setTimeout(() => {
+      setShowPortfolio(true);
+    }, 1000); // 1-second fade effect
+  };
 
   useEffect(() => {
     if (isThirdLineDone) {
@@ -49,7 +66,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
         opacity: fadeOut ? 0 : 1,
       }}
     >
-      {/* Welcome Text - Left aligned with Progress Bar */}
+      {/* Welcome Text*/}
       <div
         style={{
           position: "absolute",
@@ -105,7 +122,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
         freeze={isProgressComplete}
       />
 
-      {/* Sun image (Always visible) */}
+      {/* Sun image*/}
       <div
         style={{
           position: "absolute",
@@ -126,6 +143,11 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
         freeze={isProgressComplete}
       />
 
+      {/* Continue Sign */}
+      <ContinueSign
+        onClick={handleSignClick}
+      />
+
       {/* Soil Layer (Always visible) */}
       <div
         style={{
@@ -139,7 +161,9 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
           backgroundPosition: "top left",
         }}
       />
+
     </div>
+
   );
 };
 

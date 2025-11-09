@@ -16,6 +16,19 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
   const [isThirdLineDone, setIsThirdLineDone] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
 
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setViewportWidth(window.innerWidth);
+      setViewportHeight(window.innerHeight);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   useEffect(() => {
     const isMobile = /Mobi|Android|iPhone|iPad|iPod/.test(navigator.userAgent) || window.innerWidth < 768;
     
@@ -44,13 +57,20 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
     }
   }, [isThirdLineDone, setShowPortfolio]);
 
-  const viewportWidth = window.innerWidth;
-  const sunWidth = 0.12 * viewportWidth;
-  const seedPacketWidth = 0.3 * window.innerHeight * (1 / 1.5);
+  // const viewportWidth = window.innerWidth;
+  // const sunWidth = 0.12 * viewportWidth;
+  // const seedPacketWidth = 0.3 * window.innerHeight * (1 / 1.5);
 
+  // const progressBarLeft = sunWidth + 30;
+  // const progressBarRight = viewportWidth - seedPacketWidth - 30;
+  // const progressBarWidth = progressBarRight - progressBarLeft;
+
+  const sunWidth = 0.12 * viewportWidth;
+  const seedPacketWidth = 0.3 * viewportHeight * (1 / 1.5);
   const progressBarLeft = sunWidth + 30;
   const progressBarRight = viewportWidth - seedPacketWidth - 30;
   const progressBarWidth = progressBarRight - progressBarLeft;
+
 
   return (
     <div
@@ -141,6 +161,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
       <SeedStack
         setProgressActive={setIsProgressActive}
         freeze={isProgressComplete}
+        vpHeight={viewportHeight}
+        vpWidth={viewportWidth}
       />
 
       {/* Continue Sign */}

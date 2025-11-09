@@ -10,17 +10,26 @@ interface SeedPacket {
 interface SeedStackProps {
   setProgressActive: (isActive: boolean) => void;
   freeze: boolean; // Disable interactions if true
+  vpHeight: number; // Viewport Height
+  vpWidth: number; // Viewport Width
 }
 
-const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze }) => {
-  const seedHeight = 0.3 * window.innerHeight; // 30% of viewport height
-  const seedWidth = seedHeight * (1 / 1.5); // Maintain aspect ratio 1:1.5
+const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeight, vpWidth }) => {
+  const seedHeight = 0.3 * vpHeight;
+  const seedWidth = seedHeight * (1 / 1.5);
   const basePosition = {
     top: 20,
-    left: window.innerWidth - 20 - seedWidth, // Top-right with padding
+    left: vpWidth - 20 - seedWidth,
   };
 
-  const lineThreshold = 0.75 * window.innerHeight; // 25% from bottom
+  // const seedHeight = 0.3 * window.innerHeight; // 30% of viewport height
+  // const seedWidth = seedHeight * (1 / 1.5); // Maintain aspect ratio 1:1.5
+  // const basePosition = {
+  //   top: 20,
+  //   left: window.innerWidth - 20 - seedWidth, // Top-right with padding
+  // };
+
+  const lineThreshold = 0.75 * vpHeight; // 25% from bottom
 
   const seedRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const rotationRef = useRef<{ [key: string]: number }>({});
@@ -38,7 +47,7 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze }) => {
       zIndex: 3,
       originalPosition: {
         ...basePosition,
-        top: basePosition.top + 0.1 * window.innerHeight, // Offset by 10% of viewport height
+        top: basePosition.top + 0.1 * vpHeight, // Offset by 10% of viewport height
       },
     },
     {
@@ -47,7 +56,7 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze }) => {
       zIndex: 2,
       originalPosition: {
         ...basePosition,
-        top: basePosition.top + 0.05 * window.innerHeight, // Offset by 5% of viewport height
+        top: basePosition.top + 0.05 * vpHeight, // Offset by 5% of viewport height
       },
     },
     {

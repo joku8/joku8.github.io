@@ -1,0 +1,70 @@
+[
+  {
+    "id": "1",
+    "question": "Which city is in the native region of the Venus Flytrap (Dionaea Muscipula)?",
+    "answers": ["Wilmington, North Carolina", "Cape Town, South Africa", "Rio de Janeiro, Brazil", "Manila, Philippines"]
+  },
+  {
+    "id": "2",
+    "question": "Which economically important spice comes from a member of the Orchiaceae family?",
+    "answers": ["Vanilla", "Tumeric", "Black Pepper", "Cinnamon"]
+  },
+  {
+    "id": "3",
+    "question": "Why do carnivorous plants catch and digest insects?",
+    "answers": [
+        "To obtain essential nutrients like nitrogen from poor soil environments",
+        "To increase their photosynthesis rate by absorbing insect energy",
+        "To protect themselves from herbivorous insects",
+        "To attract pollinators for reproduction"
+    ]
+  },
+  {
+    "id": "4",
+    "question": "Which of the following carnivorous plant genera only consist of tropical species?",
+    "answers": [
+        "Napenthes",
+        "Drosera",
+        "Sarracenia",
+        "Pinguicula"
+    ]
+  },
+  {
+    "id": "5",
+    "question": "Which of the following fruits are in the same family (Ericaceae, or Heaths as Blueberries?",
+    "answers": [
+        "Cranberry",
+        "Raspberry",
+        "Strawberry",
+        "Grape"
+    ]
+  },
+  {
+    "id": "6",
+    "question": "Orchids can be found on every continent except antarctica",
+    "answers": [
+        "True",
+        "False"
+    ]
+  },
+  {
+    "id": "7",
+    "question": "Which US state has the fewest native orchid species?",
+    "answers": [
+        "Hawaii",
+        "Florida",
+        "Iowa",
+        "Maryland"
+    ]
+  },
+  {
+    "id": "8",
+    "question": "Which genus is the most commonly grown orchid in the United States?",
+    "answers": [
+        "Phalaenopsis",
+        "Cattleya",
+        "Bulbophyllum",
+        "Vanda"
+    ]
+  }
+]

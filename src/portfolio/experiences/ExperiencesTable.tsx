@@ -2,7 +2,7 @@ import { Table, Badge, Group } from '@mantine/core';
 
 const experienceData = [
     {
-        role: '(Test / Robotics) Product Engineer',
+        role: 'Test / Robotics Product Engineer',
         company: 'John Deere',
         date: 'Jul 2024 – Present',
         skills: [
@@ -30,15 +30,15 @@ const experienceData = [
     },
     {
         role: 'Undergraduate Researcher - Dr. Elhan Ersoz',
-        company: 'University of Illinois at Urbana-Champaign',
+        company: 'National Center for Supercomputing Applications (UIUC)',
         date: 'Aug 2023 – May 2024',
         skills: [
             '🌾 Digital Agriculture',
             '🧬 Genetics',
             '🧠 Machine Learning',
+            '🌱 Crop Breeding',
             '📊 Data Analysis/Visualization',
             '🐍 Python',
-            '🌱 Crop Breeding',
         ],
     },
     {
@@ -68,9 +68,9 @@ export function ExperienceTable() {
   const rows = experienceData.map((item, index) => (
     <tr key={index}>
       <td style={{ width: '30%' }}>{item.role}</td>
-      <td style={{ width: '20%' }}>{item.company}</td>
-      <td style={{ width: '15%' }}>{item.date}</td>
-      <td style={{ width: '35%' }}>
+      <td style={{ width: '23%' }}>{item.company}</td>
+      <td style={{ width: '10%' }}>{item.date}</td>
+      <td style={{ width: '37%' }}>
         <Group spacing="xs">
           {item.skills.map((skill, i) => (
             <Badge key={i} variant="light" size="sm">
@@ -83,8 +83,8 @@ export function ExperienceTable() {
   ));
 
   return (
-    <>
-      <Table highlightOnHover withColumnBorders striped>
+    <div style={{ overflowX: 'auto', overflowY: 'hidden', maxWidth: '100%' }}>
+      <Table highlightOnHover withColumnBorders striped style={{ minWidth: '800px' }}>
         <thead>
           <tr>
             <th style={{ width: '25%' }}>Role</th>
@@ -95,6 +95,6 @@ export function ExperienceTable() {
         </thead>
         <tbody>{rows}</tbody>
       </Table>
-    </>
+    </div>
   );
 }

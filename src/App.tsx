@@ -11,7 +11,7 @@ const App: React.FC = () => {
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     minHeight: '100vh',
-    width: '100vw',
+    width: '99vw',
   };
 
   return (

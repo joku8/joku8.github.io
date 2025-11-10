@@ -5,6 +5,7 @@ import { Title, SimpleGrid } from "@mantine/core";
 import { PlantPassProjCard } from "./projects/PlantPassProjCard";
 import { AgroDetectProjCard } from "./projects/AgroDetectProjCard";
 import { ExperienceTable } from "./experiences/ExperiencesTable";
+import PlantTrivia from "./trivia/PlantTrivia";
 
 const Portfolio: React.FC = () => {
   return (
@@ -33,6 +34,9 @@ const Portfolio: React.FC = () => {
         <TerraRefProjCard />
         <AgroDetectProjCard />
       </SimpleGrid>
+      <div style={{ height: "2rem" }} />
+
+      <PlantTrivia />
     </div>
   );
 };

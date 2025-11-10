@@ -5,7 +5,7 @@ import classes from './PlantPassProjCard.module.css';
 const data = {
   image:
     '/images/spf2024.jpg',
-  title: 'PlantPass: Spring Plant Fair Checkout and Rveenue Tracking Application',
+  title: 'PlantPass: Spring Plant Fair Checkout and Revenue Tracking Application',
   type: 'UIUC Horticulture Club Spring Plant Fair',
   description:
     'Built a lightweight React app for the Spring Plant Fair checkout station, streamlining the payment process and applying discounts dynamically. Processed 700+ transactions totaling $11K+ with zero downtime, while enabling post-sale analytic. Designed for non-technical volunteers, improving speed and accuracy at a high-traffic public event.',

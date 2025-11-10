@@ -50,7 +50,7 @@ export function MyInfo() {
         <Image src="/images/deere_logo.jpg" className={classes.image} />
       </Group>
       </div>
-      <Image src="/images/pfp.jpg" className={classes.image} />
+      <Image src="/images/pfp.png" className={classes.image} />
     </div>
   );
 }

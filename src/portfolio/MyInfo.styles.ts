@@ -16,7 +16,7 @@ export const useStyles = createStyles((theme) => ({
   },
 
   image: {
-    maxWidth: '25%',
+    maxWidth: '29%',
 
     [`@media (max-width: ${theme.breakpoints.sm})`]: {
       maxWidth: '100%',

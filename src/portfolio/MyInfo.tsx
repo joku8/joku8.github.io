@@ -9,16 +9,17 @@ export function MyInfo() {
     <div className={classes.wrapper}>
       <div className={classes.body}>
         <Title className={classes.title}>Joseph Ku</Title>
-        <Group spacing={3}>
+        {/* <div style={{ height: "0.5rem" }} /> */}
+        <Text fw={500} fz="lg" mb={5}>
+          Software Developer
+        </Text>
+                <Group spacing={3}>
           <IconMapPin/>
           <Text fw={100} fz="md" mb={0}>
             Des Moines, IA
           </Text>
         </Group>
         <div style={{ height: "0.5rem" }} />
-        <Text fw={500} fz="lg" mb={5}>
-          Software Developer
-        </Text>
         <Text fz="sm" c="dimmed">
           Hello! I got my start in crop science and plant biochemistry, but discovered a passion for computer science — and now I build technical solutions that bridge disciplines and solve real-world problems.
         </Text>

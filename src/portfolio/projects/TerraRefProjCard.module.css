@@ -1,0 +1,22 @@
+.card {
+  background-color: #ffffff;
+}
+
+.section {
+  border-bottom: 1px solid #dee2e6;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: 16px;
+}
+
+.like {
+  color: #228B22;
+  width: 20px;
+  height: 20px;
+}
+
+.label {
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 700;
+}

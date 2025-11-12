@@ -9,7 +9,7 @@ export function MyInfo() {
     <div className={classes.wrapper}>
       <div className={classes.body}>
         <Title className={classes.title}>
-          Joe Ku
+          Joseph (Joe) Ku
         </Title>
         {/* <div style={{ height: "0.5rem" }} /> */}
         <Text fw={500} fz="lg" mb={5}>

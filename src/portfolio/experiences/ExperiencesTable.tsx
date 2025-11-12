@@ -1,4 +1,4 @@
-import { Table, Badge, Group } from '@mantine/core';
+import { Table, Badge, Group, Title } from '@mantine/core';
 
 const experienceData = [
     {
@@ -84,6 +84,9 @@ export function ExperienceTable() {
 
   return (
     <div style={{ overflowX: 'auto', overflowY: 'hidden', maxWidth: '100%' }}>
+      <Title order={2} style={{ marginBottom: "1rem" }}>
+        Experiences
+      </Title>
       <Table highlightOnHover withColumnBorders striped style={{ minWidth: '800px' }}>
         <thead>
           <tr>

@@ -74,7 +74,7 @@ const PlantTrivia: React.FC = () => {
   return (
     <Container fluid size="sm" px="0" py="xl">
       <Stack spacing="md">
-        <Title order={2}>Try Some ~Plant Trivia~</Title>
+        <Title order={2}>Try Some Plant Trivia!</Title>
 
         <Progress value={progress} size="md" radius="xl" />
         <Text>{answeredIds.length} / {questions.length} answered</Text>

@@ -66,5 +66,25 @@
         "Bulbophyllum",
         "Vanda"
     ]
+  },
+  {
+    "id": "9",
+    "question": "What is the best soil pH range for blueberries?",
+    "answers": [
+        "4.5 - 5.5",
+        "1.0 - 2.0",
+        "7.0 - 8.0",
+        "10.0 - 11.0"
+    ]
+  },
+  {
+    "id": "10",
+    "question": "Amorphophallus titanum, or the Titan-arum, is unique in that it smells like rotting flesh to attract flies to pollinate itself. It is also the largest single unbranched inflorescence in the world and listed as endangered on the IUCN Red List of Threatened Species (2018). What is this plant's native region?",
+    "answers": [
+        "Sumatra, Indonesia",
+        "Tampa, Florida (US)",
+        "Manaus, Brazil",
+        "Nairobi, Kenya"
+    ]
   }
 ]

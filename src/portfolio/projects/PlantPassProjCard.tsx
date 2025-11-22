@@ -54,7 +54,7 @@ export function PlantPassProjCard() {
         radius="md"
         style={{ flex: 1 }}
         component="a"
-        href="https://joku8.github.io/PlantPass/"
+        href="https://d7t3y7i7q58dz.cloudfront.net/"
         target="_blank"
         sx={{
           backgroundColor: '#228be6', // base blue

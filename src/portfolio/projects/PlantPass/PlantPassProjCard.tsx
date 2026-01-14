@@ -8,7 +8,7 @@ const data = {
   title: 'PlantPass: Spring Plant Fair Checkout and Revenue Tracking Application',
   type: 'UIUC Horticulture Club Spring Plant Fair',
   description:
-    'Built a lightweight React app for the Spring Plant Fair checkout station, streamlining the payment process and applying discounts dynamically. Processed 700+ transactions totaling $11K+ with zero downtime, while enabling post-sale analytic. Designed for non-technical volunteers, improving speed and accuracy at a high-traffic public event.',
+    'Developing a lightweight React application for the Spring Plant Fair checkout station, streamlining payment workflows, configurable sales options, and real‑time analytics. The system has already supported 700+ transactions totaling $11K+ with zero downtime, and I’m continuing to expand its usability, including a new Barcode Scan feature for 2026. A key focus is refining the interface for non‑technical volunteers to improve efficiency during high‑traffic events.',
   badges: [
     { emoji: '☁️', label: 'AWS' },
     { emoji: '⚛️', label: 'React/JS' },

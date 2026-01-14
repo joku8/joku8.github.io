@@ -20,7 +20,7 @@ const App: React.FC = () => {
     >
       {showPortfolio ? (
         <MantineProvider>
-          <Container size="lg" pt="xl">
+          <Container size="lg" pt="xl" sx={{padding: '20px 0px 20px 0px'}}>
             <Card shadow="sm" padding="lg" radius="md" withBorder>
               <Portfolio />
             </Card>

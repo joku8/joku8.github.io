@@ -1,8 +1,8 @@
 import React from 'react';
 import { Title, SimpleGrid } from '@mantine/core';
-import { PlantPassProjCard } from './PlantPassProjCard';
-import { TerraRefProjCard } from './TerraRefProjCard';
-import { AgroDetectProjCard } from './AgroDetectProjCard';
+import { PlantPassProjCard } from './PlantPass/PlantPassProjCard';
+import { TerraRefProjCard } from './TerraRef/TerraRefProjCard';
+import { AgroDetectProjCard } from './AgroDetect/AgroDetectProjCard';
 
 const ProjectsWrapper: React.FC = () => {
   return (

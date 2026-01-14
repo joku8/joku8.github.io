@@ -1,5 +1,5 @@
 import { IconBrandGithub } from '@tabler/icons-react';
-import { ActionIcon, Badge, Button, Card, Group, Image, Text, Tooltip } from '@mantine/core';
+import { ActionIcon, Badge, Button, Card, em, Group, Image, Text, Tooltip } from '@mantine/core';
 import classes from './PlantPassProjCard.module.css';
 
 const data = {
@@ -10,6 +10,7 @@ const data = {
   description:
     'Built a lightweight React app for the Spring Plant Fair checkout station, streamlining the payment process and applying discounts dynamically. Processed 700+ transactions totaling $11K+ with zero downtime, while enabling post-sale analytic. Designed for non-technical volunteers, improving speed and accuracy at a high-traffic public event.',
   badges: [
+    { emoji: '☁️', label: 'AWS' },
     { emoji: '⚛️', label: 'React/JS' },
     { emoji: '🎨', label: 'Material UI' },
     { emoji: '📈', label: 'Data Collection' },

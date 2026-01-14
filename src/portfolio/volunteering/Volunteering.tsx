@@ -1,22 +1,15 @@
 import { Image, SimpleGrid, Title } from '@mantine/core';
-import { useEffect, useState } from 'react';
 
 const imageFolder = '/images/volunteering'; // relative to /public
 
 export const Volunteering = () => {
-  const [imageList, setImageList] = useState<string[]>([]);
 
-  useEffect(() => {
-    // Simulate fetching image names from a known list
-    // In real apps, you'd fetch this from an API or hardcode it
-    const images = [
-      'PCMG.png',
-      'GDMBG.jpg',
-      'GDMCB.jpg',
-      'CIOS.jpg',
-    ];
-    setImageList(images);
-  }, []);
+  const imageList = [
+    'PCMG.png',
+    'GDMBG.jpg',
+    'GDMCB.jpg',
+    'CIOS.jpg',
+  ];
 
   return (
     <>

@@ -46,7 +46,6 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
     };
   }, [isFilling, freeze, isComplete]);
 
-  // 🔹 Call `onComplete` in `useEffect` to prevent state updates during render
   useEffect(() => {
     if (isComplete) {
       onComplete(); // Notify parent only when progress reaches 100%

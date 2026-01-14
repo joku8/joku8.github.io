@@ -21,14 +21,7 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeig
     top: 20,
     left: vpWidth - 20 - seedWidth,
   };
-
-  // const seedHeight = 0.3 * window.innerHeight; // 30% of viewport height
-  // const seedWidth = seedHeight * (1 / 1.5); // Maintain aspect ratio 1:1.5
-  // const basePosition = {
-  //   top: 20,
-  //   left: window.innerWidth - 20 - seedWidth, // Top-right with padding
-  // };
-
+  
   const lineThreshold = 0.75 * vpHeight; // 25% from bottom
 
   const seedRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});

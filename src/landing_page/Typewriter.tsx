@@ -5,15 +5,15 @@ interface TypewriterProps {
   speed?: number;
   onComplete?: () => void;
   showCursor?: boolean;
-  hideCursor?: boolean; // 👈 New prop to hide the cursor explicitly when the next line starts
+  hideCursor?: boolean;
 }
 
 const Typewriter: React.FC<TypewriterProps> = ({
   text,
-  speed = 100,
+  speed = 200,
   onComplete,
   showCursor = true,
-  hideCursor = false, // 👈 Defaults to false, meaning the cursor is shown initially
+  hideCursor = false,
 }) => {
   const [displayText, setDisplayText] = useState("");
   const [index, setIndex] = useState(0);
@@ -40,7 +40,7 @@ const Typewriter: React.FC<TypewriterProps> = ({
       }, 500);
       return () => clearInterval(cursorInterval);
     } else {
-      setCursorVisible(false); // 👈 If explicitly told to hide, the cursor disappears
+      setCursorVisible(false);
     }
   }, [hideCursor]);
 

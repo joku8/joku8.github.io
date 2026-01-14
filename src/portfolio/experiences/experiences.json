@@ -1,0 +1,65 @@
+[
+    {
+        "role": "Software Engineer",
+        "company": "John Deere",
+        "date": "Jul 2024 – Present",
+        "skills": [
+            "⚙️ Automation",
+            "🐍 Python",
+            "💻 C/C++",
+            "🐹 Golang",
+            "☁️ AWS",
+            "🧪 Databricks",
+            "📦 Kubernetes",
+            "🤖 Robotics",
+            "📊 Data Visualization",
+            "⚛️ ReactJS/TS",
+            "⛏️ Rust"
+        ]
+    },
+    {
+        "role": "Full Stack Software Engineer Intern/Part-time Student",
+        "company": "Cargill",
+        "date": "May 2023 – May 2024",
+        "skills": [
+            "📊 Data Analysis/Visualization",
+            "⚛️ React/JS",
+            "🎨 Material UI",
+            "🐍 Python"
+        ]
+    },
+    {
+        "role": "Undergraduate Researcher - Dr. Elhan Ersoz",
+        "company": "National Center for Supercomputing Applications (UIUC)",
+        "date": "Aug 2023 – May 2024",
+        "skills": [
+            "🌾 Digital Agriculture",
+            "🧬 Genetics",
+            "🧠 Machine Learning",
+            "🌱 Crop Breeding",
+            "📊 Data Analysis/Visualization",
+            "🐍 Python"
+        ]
+    },
+    {
+        "role": "Plant Biochemistry Research Intern - Dr. Aleksandra Skirycz",
+        "company": "Boyce Thompson Institute",
+        "date": "Summer 2022",
+        "skills": [
+            "📊 R (Data Analysis & Visualization)",
+            "🧬 Biochemistry",
+            "🧫 Enzymology",
+            "🧪 Wet Lab Techniques",
+            "🦠 Cell Culture"
+        ]
+    },
+    {
+        "role": "Chemistry Teaching Assistant (General & Organic)",
+        "company": "University of Illinois at Urbana-Champaign",
+        "date": "Aug 2021 - May 2024",
+        "skills": [
+            "🧪 Chemistry (General & Organic)",
+            "👨‍🏫 Teaching"
+        ]
+    }
+]

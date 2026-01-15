@@ -1,20 +1,29 @@
 [
     {
-        "role": "Software Engineer",
+        "role": "Software Engineer II",
         "company": "John Deere",
-        "date": "Jul 2024 – Present",
+        "date": "Jan 2026 – Present",
+        "skills": [
+            "⌨️ Typescript",
+            "♨️ Java"
+        ]
+    },
+    {
+        "role": "Engineering Development Program - Product Engineer",
+        "company": "John Deere",
+        "date": "Jul 2024 – Jan 2026",
         "skills": [
             "⚙️ Automation",
             "🐍 Python",
             "💻 C/C++",
             "🐹 Golang",
             "☁️ AWS",
-            "🧪 Databricks",
-            "📦 Kubernetes",
+            "🧱 Databricks",
+            "🐙 Kubernetes",
             "🤖 Robotics",
             "📊 Data Visualization",
             "⚛️ ReactJS/TS",
-            "⛏️ Rust"
+            "🦀 Rust"
         ]
     },
     {

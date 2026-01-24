@@ -1,20 +1,29 @@
-import { IconBrandGithub } from '@tabler/icons-react';
-import { ActionIcon, Badge, Button, Card, em, Group, Image, Text, Tooltip } from '@mantine/core';
-import classes from './PlantPassProjCard.module.css';
+import { IconBrandGithub } from "@tabler/icons-react";
+import {
+  ActionIcon,
+  Badge,
+  Button,
+  Card,
+  Group,
+  Image,
+  Text,
+  Tooltip,
+} from "@mantine/core";
+import classes from "./PlantPassProjCard.module.css";
 
 const data = {
-  image:
-    '/images/spf2024.jpg',
-  title: 'PlantPass: Spring Plant Fair Checkout and Revenue Tracking Application',
-  type: 'UIUC Horticulture Club Spring Plant Fair',
+  image: "/images/plantpass_logo.png",
+  title:
+    "PlantPass: Spring Plant Fair Checkout and Revenue Tracking Application",
+  type: "UIUC Horticulture Club Spring Plant Fair",
   description:
-    'Developing a lightweight React application for the Spring Plant Fair checkout station, streamlining payment workflows, configurable sales options, and real‑time analytics. The system has already supported 700+ transactions totaling $11K+ with zero downtime, and I’m continuing to expand its usability, including a new Barcode Scan feature for 2026. A key focus is refining the interface for non‑technical volunteers to improve efficiency during high‑traffic events.',
+    "Developing a lightweight React application for the Spring Plant Fair checkout station, streamlining payment workflows, configurable sales options, and real‑time analytics. The system has already supported 700+ transactions totaling $11K+ with zero downtime, and I’m continuing to expand its usability, including a new Barcode Scan feature for 2026. A key focus is refining the interface for non‑technical volunteers to improve efficiency during high‑traffic events.",
   badges: [
-    { emoji: '☁️', label: 'AWS' },
-    { emoji: '⚛️', label: 'React/JS' },
-    { emoji: '🎨', label: 'Material UI' },
-    { emoji: '📈', label: 'Data Collection' },
-    { emoji: '👥', label: 'UI/UX' },
+    { emoji: "☁️", label: "AWS" },
+    { emoji: "⚛️", label: "React/JS" },
+    { emoji: "🎨", label: "Material UI" },
+    { emoji: "📈", label: "Data Collection" },
+    { emoji: "👥", label: "UI/UX" },
   ],
 };
 
@@ -29,7 +38,26 @@ export function PlantPassProjCard() {
   return (
     <Card withBorder radius="md" p="md" className={classes.card}>
       <Card.Section>
-        <Image src={image} alt={title} height={180} />
+        <div
+          style={{
+            height: "180px",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center", // horizontal center (optional)
+            alignItems: "center", // vertical center
+            backgroundColor: "white", // fills empty space
+          }}
+        >
+          <Image
+            src={image}
+            alt={title}
+            style={{
+              maxHeight: "100%", // scales image to fit height
+              maxWidth: "100%", // scales image to fit width
+              objectFit: "contain", // maintain aspect ratio, no distortion
+            }}
+          />
+        </div>
       </Card.Section>
       <Card.Section className={classes.section} mt="md">
         <Group spacing={10}>
@@ -51,57 +79,57 @@ export function PlantPassProjCard() {
         </Group>
       </Card.Section>
       <Group mt="xs">
-      <Button
-        radius="md"
-        style={{ flex: 1 }}
-        component="a"
-        href="https://d7t3y7i7q58dz.cloudfront.net/"
-        target="_blank"
-        sx={{
-          backgroundColor: '#228be6', // base blue
-          color: 'white',
-          '&:hover': {
-            color: 'white', // darker blue on hover
-          },
-        }}
-      >
-        Try it out!
-      </Button>
-      <Tooltip label="Open Github Repo" withArrow>
-        <ActionIcon
-          variant="default"
+        <Button
           radius="md"
-          size={36}
+          style={{ flex: 1 }}
           component="a"
-          href="https://github.com/joku8/PlantPass"
+          href="https://d7t3y7i7q58dz.cloudfront.net/"
           target="_blank"
+          sx={{
+            backgroundColor: "#228be6", // base blue
+            color: "white",
+            "&:hover": {
+              color: "white", // darker blue on hover
+            },
+          }}
         >
-          <IconBrandGithub className={classes.like} stroke={1.5} />
-        </ActionIcon>
-      </Tooltip>
+          Try it out!
+        </Button>
+        <Tooltip label="Open Github Repo" withArrow>
+          <ActionIcon
+            variant="default"
+            radius="md"
+            size={36}
+            component="a"
+            href="https://github.com/joku8/PlantPass"
+            target="_blank"
+          >
+            <IconBrandGithub className={classes.like} stroke={1.5} />
+          </ActionIcon>
+        </Tooltip>
       </Group>
       <div style={{ height: "0.5rem" }} />
-    <Group>
-      <Button
-        radius="md"
-        style={{ flex: 1 }}
-        component="a"
-        href="/files/Hort-Club-Plant-Sale-Figures-0415.pdf"
-        target="_blank"
-        variant="outline"
-        sx={{
-          borderColor: '#228be6',
-          color: '#228be6',
-          '&:hover': {
-            backgroundColor: '#e7f5ff', // light blue hover
-            borderColor: '#1864ab',     // darker blue border
-            color: '#1864ab',
-          },
-        }}
-      >
-        2024 Spring Plant Fair Sales Figures
-      </Button>
-    </Group>
+      <Group>
+        <Button
+          radius="md"
+          style={{ flex: 1 }}
+          component="a"
+          href="/files/Hort-Club-Plant-Sale-Figures-0415.pdf"
+          target="_blank"
+          variant="outline"
+          sx={{
+            borderColor: "#228be6",
+            color: "#228be6",
+            "&:hover": {
+              backgroundColor: "#e7f5ff", // light blue hover
+              borderColor: "#1864ab", // darker blue border
+              color: "#1864ab",
+            },
+          }}
+        >
+          2024 Spring Plant Fair Sales Figures
+        </Button>
+      </Group>
     </Card>
   );
 }

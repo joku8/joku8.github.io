@@ -15,7 +15,8 @@ const data = {
   image: "/images/plantpass_logo.png",
   title:
     "PlantPass: Spring Plant Fair Checkout and Revenue Tracking Application",
-  type: "UIUC Horticulture Club Spring Plant Fair",
+  type: "UIUC Hort Club Spring Plant Fair",
+  dates: "Apr 2024 – Present",
   description:
     "Developing a lightweight React application for the Spring Plant Fair checkout station, streamlining payment workflows, configurable sales options, and real‑time analytics. The system has already supported 700+ transactions totaling $11K+ with zero downtime, and I’m continuing to expand its usability, including a new Barcode Scan feature for 2026. A key focus is refining the interface for non‑technical volunteers to improve efficiency during high‑traffic events.",
   badges: [
@@ -28,7 +29,7 @@ const data = {
 };
 
 export function PlantPassProjCard() {
-  const { image, title, type, description, badges } = data;
+  const { image, title, type, dates, description, badges } = data;
   const features = badges.map((badge) => (
     <Badge variant="light" key={badge.label} leftSection={badge.emoji}>
       {badge.label}
@@ -68,6 +69,10 @@ export function PlantPassProjCard() {
             {type}
           </Badge>
         </Group>
+        <div style={{ height: "9px" }} />
+        <Text fz="xs" c="dimmed" mt={2}>
+          {dates}
+        </Text>
         <Text fz="sm" mt="xs">
           {description}
         </Text>

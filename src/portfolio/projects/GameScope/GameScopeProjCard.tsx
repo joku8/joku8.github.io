@@ -9,25 +9,20 @@ import {
   Text,
   Tooltip,
 } from "@mantine/core";
-import classes from "./AgroDetectProjCard.module.css";
+import classes from "./GameScopeProjCard.module.css";
 
 const data = {
-  image: "/images/agrodetect-ss.png",
-  title: "AgroDetect: Crop Disease & Pest Tracker",
-  type: "HackIllinois 2023",
-  dates: "Mar 2023 - Nov 2023",
+  image: "/images/GameScope_banner.png",
+  title:
+    "GameScope: Video game recommendation platform leveraging machine learning to personalize user experiences",
+  type: "Collaborative Project",
+  dates: "Jan 2026 – Present",
   description:
-    "A full-stack web app that helps farmers identify crop damage using image uploads and machine learning. Tracks pest and disease spread via location data, enabling real-time alerts and regional insights. Built with TensorFlow, Flask, MongoDB, and JavaScript.",
-  badges: [
-    { emoji: "🧠", label: "Machine Learning (Tensorflow)" },
-    { emoji: "🐍", label: "Python + Flask" },
-    { emoji: "🎨", label: "Material UI" },
-    { emoji: "📈", label: "Data Collection" },
-    { emoji: "🌾", label: "Digital Agriculture" },
-  ],
+    "GameScope is a web application designed to provide personalized video game recommendations based on user preferences and gameplay history. By utilizing machine learning algorithms, GameScope analyzes user data to suggest games that align with individual tastes, providing targeted game discovery.",
+  badges: [{ emoji: "🐍", label: "Python/Jupyter Notebook" }],
 };
 
-export function AgroDetectProjCard() {
+export function GameScopeProjCard() {
   const { image, title, type, dates, description, badges } = data;
   const features = badges.map((badge) => (
     <Badge variant="light" key={badge.label} leftSection={badge.emoji}>
@@ -38,7 +33,26 @@ export function AgroDetectProjCard() {
   return (
     <Card withBorder radius="md" p="md" className={classes.card}>
       <Card.Section>
-        <Image src={image} alt={title} height={180} />
+        <div
+          style={{
+            height: "180px",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center", // horizontal center (optional)
+            alignItems: "center", // vertical center
+            backgroundColor: "white", // fills empty space
+          }}
+        >
+          <Image
+            src={image}
+            alt={title}
+            style={{
+              maxHeight: "100%", // scales image to fit height
+              maxWidth: "100%", // scales image to fit width
+              objectFit: "contain", // maintain aspect ratio, no distortion
+            }}
+          />
+        </div>
       </Card.Section>
       <Card.Section className={classes.section} mt="md">
         <Group spacing={10}>
@@ -63,30 +77,14 @@ export function AgroDetectProjCard() {
           {features}
         </Group>
       </Card.Section>
-      <Group mt="xs">
-        <Button
-          radius="md"
-          style={{ flex: 1 }}
-          component="a"
-          href="/files/AgroDetect_HackIllinoisPresentation.pdf"
-          target="_blank"
-          sx={{
-            backgroundColor: "#228be6", // base blue
-            color: "white",
-            "&:hover": {
-              color: "white", // darker blue on hover
-            },
-          }}
-        >
-          Project Presentation
-        </Button>
+      <Group mt="xs" position="right">
         <Tooltip label="Open Github Repo" withArrow>
           <ActionIcon
             variant="default"
             radius="md"
             size={36}
             component="a"
-            href="https://github.com/joku8/AgroDectect-Webapp"
+            href="https://github.com/joku8/GameScope"
             target="_blank"
           >
             <IconBrandGithub className={classes.like} stroke={1.5} />

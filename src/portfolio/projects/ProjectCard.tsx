@@ -1,4 +1,4 @@
-import { IconBrandGithub } from "@tabler/icons-react";
+import { IconBrandGithub, IconReportAnalytics } from "@tabler/icons-react";
 import {
   ActionIcon,
   Badge,
@@ -10,17 +10,19 @@ import {
   Tooltip,
 } from "@mantine/core";
 import classes from "./ProjectCard.module.css";
+import { BadgeGroup } from "../../components/BadgeGroup";
 
 export interface ProjectButton {
   label: string;
   href: string;
   variant?: "filled" | "outline";
-  icon?: React.ReactNode;
+  icon?: string | React.ReactNode;
   tooltip?: string;
   isIconOnly?: boolean;
 }
 
 export interface ProjectData {
+  id: string;
   image: string;
   title: string;
   type: string;
@@ -35,14 +37,22 @@ interface ProjectCardProps {
   data: ProjectData;
 }
 
+const getIcon = (iconName: string | React.ReactNode): React.ReactNode => {
+  if (typeof iconName === 'string') {
+    switch (iconName) {
+      case 'github':
+        return <IconBrandGithub className={classes.like} stroke={1.5} />;
+      case 'report':
+        return <IconReportAnalytics className={classes.like} stroke={1.5} />;
+      default:
+        return <IconBrandGithub className={classes.like} stroke={1.5} />;
+    }
+  }
+  return iconName;
+};
+
 export function ProjectCard({ data }: ProjectCardProps) {
   const { image, title, type, dates, description, badges, buttons, imageStyle = "cover" } = data;
-  
-  const features = badges.map((badge) => (
-    <Badge variant="light" key={badge.label} leftSection={badge.emoji}>
-      {badge.label}
-    </Badge>
-  ));
 
   const renderImage = () => {
     if (imageStyle === "contain") {
@@ -122,7 +132,7 @@ export function ProjectCard({ data }: ProjectCardProps) {
                       href={iconBtn.href}
                       target="_blank"
                     >
-                      {iconBtn.icon || <IconBrandGithub className={classes.like} stroke={1.5} />}
+                      {getIcon(iconBtn.icon || 'github')}
                     </ActionIcon>
                   </Tooltip>
                 ))}
@@ -142,7 +152,7 @@ export function ProjectCard({ data }: ProjectCardProps) {
                   href={iconBtn.href}
                   target="_blank"
                 >
-                  {iconBtn.icon || <IconBrandGithub className={classes.like} stroke={1.5} />}
+                  {getIcon(iconBtn.icon || 'github')}
                 </ActionIcon>
               </Tooltip>
             ))}
@@ -177,9 +187,9 @@ export function ProjectCard({ data }: ProjectCardProps) {
       </Card.Section>
 
       <Card.Section className={classes.section}>
-        <Group spacing={7} mt={5}>
-          {features}
-        </Group>
+        <div style={{ marginTop: '5px' }}>
+          <BadgeGroup badges={badges} spacing={7} />
+        </div>
       </Card.Section>
       
       {renderButtons()}

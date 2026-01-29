@@ -1,0 +1,21 @@
+// Layout and animation constants
+export const VIEWPORT_RATIOS = {
+  SEED_STACK_WIDTH: 0.12,
+  SEED_STACK_HEIGHT: 0.3,
+  LINE_THRESHOLD: 0.75,
+  PROGRESS_BAR_WIDTH: 0.6,
+  PROGRESS_BAR_HEIGHT: 0.05,
+} as const;
+
+export const ANIMATION_DELAYS = {
+  TYPEWRITER_DELAY: 100,
+  PROGRESS_COMPLETE_DELAY: 2000,
+  FADE_OUT_DURATION: 1000,
+} as const;
+
+export const COLORS = {
+  PRIMARY_BLUE: '#228be6',
+  HOVER_BLUE: '#1864ab',
+  LIGHT_BLUE_HOVER: '#e7f5ff',
+  SKY_BLUE: '#87ceeb',
+} as const;

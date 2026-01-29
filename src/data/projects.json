@@ -1,0 +1,124 @@
+[
+  {
+    "id": "plantpass",
+    "image": "/images/plantpass_logo.png",
+    "title": "PlantPass: Spring Plant Fair Checkout and Revenue Tracking Application",
+    "type": "UIUC Hort Club Spring Plant Fair",
+    "dates": "Apr 2024 – Present",
+    "description": "Developing a lightweight React application for the Spring Plant Fair checkout station, streamlining payment workflows, configurable sales options, and real‑time analytics. The system has already supported 700+ transactions totaling $11K+ with zero downtime, and I'm continuing to expand its usability, including a new Barcode Scan feature for 2026. A key focus is refining the interface for non‑technical volunteers to improve efficiency during high‑traffic events.",
+    "badges": [
+      { "emoji": "☁️", "label": "AWS" },
+      { "emoji": "⚛️", "label": "React/JS" },
+      { "emoji": "🎨", "label": "Material UI" },
+      { "emoji": "📈", "label": "Data Collection" },
+      { "emoji": "👥", "label": "UI/UX" }
+    ],
+    "imageStyle": "contain",
+    "buttons": [
+      {
+        "label": "Try it out!",
+        "href": "https://d7t3y7i7q58dz.cloudfront.net/",
+        "variant": "filled"
+      },
+      {
+        "label": "Open Github Repo",
+        "href": "https://github.com/joku8/PlantPass",
+        "icon": "github",
+        "tooltip": "Open Github Repo",
+        "isIconOnly": true
+      },
+      {
+        "label": "2024 Spring Plant Fair Sales Figures",
+        "href": "/files/Hort-Club-Plant-Sale-Figures-0415.pdf",
+        "variant": "outline"
+      }
+    ]
+  },
+  {
+    "id": "gamescope",
+    "image": "/images/GameScope_banner.png",
+    "title": "GameScope: Video game recommendation platform leveraging machine learning to personalize user experiences",
+    "type": "Collaborative Project",
+    "dates": "Jan 2026 – Present",
+    "description": "GameScope is a web application designed to provide personalized video game recommendations based on user preferences and gameplay history. By utilizing machine learning algorithms, GameScope analyzes user data to suggest games that align with individual tastes, providing targeted game discovery.",
+    "badges": [
+      { "emoji": "🐍", "label": "Python/Jupyter Notebook" }
+    ],
+    "imageStyle": "contain",
+    "buttons": [
+      {
+        "label": "Open API Github Repo",
+        "href": "https://github.com/joku8/GameScope_api",
+        "icon": "github",
+        "tooltip": "Open API Github Repo",
+        "isIconOnly": true
+      },
+      {
+        "label": "Open UI Github Repo",
+        "href": "https://github.com/joku8/GameScope_ui",
+        "icon": "github",
+        "tooltip": "Open UI Github Repo",
+        "isIconOnly": true
+      }
+    ]
+  },
+  {
+    "id": "terraref",
+    "image": "/images/TERRA-REF-Scanner.jpg",
+    "title": "Development of a Machine Learning Model for Predicting Plant Traits Using High-Resolution Sensor Data from TERRA-REF",
+    "type": "2024 Undergraduate Research Symposium",
+    "dates": "Feb 2024 - Apr 2024",
+    "description": "I built a machine learning model to predict plant traits from high-resolution TERRA-REF sensor data, identifying features linked to biomass and growth in Sorghum bicolor. This work demonstrates how data-driven approaches can optimize crop performance and reveal genotype responses to the environment.",
+    "badges": [
+      { "emoji": "🐍", "label": "Python" },
+      { "emoji": "🧠", "label": "Machine Learning" },
+      { "emoji": "🌾", "label": "Digital Agriculture" },
+      { "emoji": "📊", "label": "Data Science/Visualization" }
+    ],
+    "imageStyle": "cover",
+    "buttons": [
+      {
+        "label": "Learn more about TERRA-REF",
+        "href": "https://terraref.org/index.html",
+        "variant": "filled"
+      },
+      {
+        "label": "Open Poster PDF",
+        "href": "https://doi.org/10.5281/zenodo.14813589",
+        "icon": "report",
+        "tooltip": "Open Poster PDF",
+        "isIconOnly": true
+      }
+    ]
+  },
+  {
+    "id": "agrodetect",
+    "image": "/images/agrodetect-ss.png",
+    "title": "AgroDetect: Crop Disease & Pest Tracker",
+    "type": "HackIllinois 2023",
+    "dates": "Mar 2023 - Nov 2023",
+    "description": "A full-stack web app that helps farmers identify crop damage using image uploads and machine learning. Tracks pest and disease spread via location data, enabling real-time alerts and regional insights. Built with TensorFlow, Flask, MongoDB, and JavaScript.",
+    "badges": [
+      { "emoji": "🧠", "label": "Machine Learning (Tensorflow)" },
+      { "emoji": "🐍", "label": "Python + Flask" },
+      { "emoji": "🎨", "label": "Material UI" },
+      { "emoji": "📈", "label": "Data Collection" },
+      { "emoji": "🌾", "label": "Digital Agriculture" }
+    ],
+    "imageStyle": "cover",
+    "buttons": [
+      {
+        "label": "Project Presentation",
+        "href": "/files/AgroDetect_HackIllinoisPresentation.pdf",
+        "variant": "filled"
+      },
+      {
+        "label": "Open Github Repo",
+        "href": "https://github.com/joku8/AgroDectect-Webapp",
+        "icon": "github",
+        "tooltip": "Open Github Repo",
+        "isIconOnly": true
+      }
+    ]
+  }
+]

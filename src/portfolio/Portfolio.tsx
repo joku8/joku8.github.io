@@ -4,21 +4,22 @@ import { ExperienceTable } from "./experiences/ExperiencesTable";
 import PlantTrivia from "./trivia/PlantTrivia";
 import ProjectsWrapper from "./projects/ProjectsWrapper";
 import { Volunteering } from "./volunteering/Volunteering";
+import { Spacer } from "../components/Spacer";
 
 const Portfolio: React.FC = () => {
   return (
     <div>
       <MyInfo />
-      <div style={{ height: "2rem" }} />
+      <Spacer />
 
       <ExperienceTable/>
-      <div style={{ height: "2rem" }} />
+      <Spacer />
 
       <ProjectsWrapper/>
-      <div style={{ height: "2rem" }} />
+      <Spacer />
 
       <PlantTrivia/>
-      <div style={{ height: "2rem" }} />
+      <Spacer />
 
       <Volunteering />
     </div>

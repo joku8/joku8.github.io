@@ -1,11 +1,11 @@
 import React from "react";
 import { Title, SimpleGrid } from "@mantine/core";
-import { PlantPassProjCard } from "./PlantPass/PlantPassProjCard";
-import { TerraRefProjCard } from "./TerraRef/TerraRefProjCard";
-import { AgroDetectProjCard } from "./AgroDetect/AgroDetectProjCard";
-import { GameScopeProjCard } from "./GameScope/GameScopeProjCard";
+import { ProjectCard, ProjectData } from "./ProjectCard";
+import projectsData from "../../data/projects.json";
 
 const ProjectsWrapper: React.FC = () => {
+  const projects = projectsData as ProjectData[];
+
   return (
     <>
       <Title order={2} style={{ marginBottom: "1rem" }}>
@@ -19,10 +19,9 @@ const ProjectsWrapper: React.FC = () => {
           { maxWidth: "sm", cols: 1 },
         ]}
       >
-        <PlantPassProjCard />
-        <GameScopeProjCard />
-        <TerraRefProjCard />
-        <AgroDetectProjCard />
+        {projects.map((project) => (
+          <ProjectCard key={project.id} data={project} />
+        ))}
       </SimpleGrid>
     </>
   );

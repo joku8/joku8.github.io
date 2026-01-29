@@ -8,9 +8,10 @@ export const VIEWPORT_RATIOS = {
 } as const;
 
 export const ANIMATION_DELAYS = {
-  TYPEWRITER_DELAY: 100,
+  TYPEWRITER_SPEED: 50, // milliseconds per character (was 200, now much faster)
   PROGRESS_COMPLETE_DELAY: 2000,
   FADE_OUT_DURATION: 1000,
+  CURSOR_BLINK_SPEED: 500,
 } as const;
 
 export const COLORS = {

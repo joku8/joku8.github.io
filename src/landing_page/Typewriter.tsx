@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { ANIMATION_DELAYS } from "../constants/layout";
 
 interface TypewriterProps {
   text: string;
@@ -10,7 +11,7 @@ interface TypewriterProps {
 
 const Typewriter: React.FC<TypewriterProps> = ({
   text,
-  speed = 200,
+  speed = ANIMATION_DELAYS.TYPEWRITER_SPEED,
   onComplete,
   showCursor = true,
   hideCursor = false,
@@ -37,7 +38,7 @@ const Typewriter: React.FC<TypewriterProps> = ({
     if (!hideCursor) {
       const cursorInterval = setInterval(() => {
         setCursorVisible((prev) => !prev);
-      }, 500);
+      }, ANIMATION_DELAYS.CURSOR_BLINK_SPEED);
       return () => clearInterval(cursorInterval);
     } else {
       setCursorVisible(false);

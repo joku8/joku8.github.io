@@ -30,17 +30,6 @@
     ]
   },
   {
-    "role": "Full Stack Software Engineer Intern/Part-time Student",
-    "company": "Cargill",
-    "date": "May 2023 – May 2024",
-    "skills": [
-      "📊 Data Analysis/Visualization",
-      "⚛️ React/JS",
-      "🎨 Material UI",
-      "🐍 Python"
-    ]
-  },
-  {
     "role": "Undergraduate Researcher - Dr. Elhan Ersoz",
     "company": "National Center for Supercomputing Applications (UIUC)",
     "date": "Aug 2023 – May 2024",
@@ -50,6 +39,17 @@
       "🧠 Machine Learning",
       "🌱 Crop Breeding",
       "📊 Data Analysis/Visualization",
+      "🐍 Python"
+    ]
+  },
+  {
+    "role": "Full Stack Software Engineer Intern/Part-time Student",
+    "company": "Cargill",
+    "date": "May 2023 – May 2024",
+    "skills": [
+      "📊 Data Analysis/Visualization",
+      "⚛️ React/JS",
+      "🎨 Material UI",
       "🐍 Python"
     ]
   },

@@ -1,5 +1,6 @@
-import { Table, Badge, Group, Title } from '@mantine/core';
-import experienceData from './experiences.json';
+import { Table, Title } from '@mantine/core';
+import experienceData from '../../data/experiences.json';
+import { BadgeGroup } from '../../components/BadgeGroup';
 
 export function ExperienceTable() {
   const rows = experienceData.map((item, index) => (
@@ -8,13 +9,11 @@ export function ExperienceTable() {
       <td style={{ width: '23%' }}>{item.company}</td>
       <td style={{ width: '10%' }}>{item.date}</td>
       <td style={{ width: '37%' }}>
-        <Group spacing="xs">
-          {item.skills.map((skill, i) => (
-            <Badge key={i} variant="light" size="sm">
-              {skill}
-            </Badge>
-          ))}
-        </Group>
+        <BadgeGroup 
+          badges={item.skills.map(skill => ({ emoji: '', label: skill }))} 
+          spacing="xs" 
+          variant="light" 
+        />
       </td>
     </tr>
   ));

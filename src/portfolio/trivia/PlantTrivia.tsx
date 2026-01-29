@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import questionsData from './questions.json';
+import questionsData from '../../data/questions.json';
 import {
   Container,
   Progress,

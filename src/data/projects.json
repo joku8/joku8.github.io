@@ -37,7 +37,7 @@
   {
     "id": "gamescope",
     "image": "/images/GameScope_banner.png",
-    "title": "GameScope: Video game recommendation platform leveraging machine learning to personalize user experiences",
+    "title": "GameScope: Video game recommendation platform",
     "type": "Collaborative Project",
     "dates": "Jan 2026 – Present",
     "description": "GameScope is a web application designed to provide personalized video game recommendations based on user preferences and gameplay history. By utilizing machine learning algorithms, GameScope analyzes user data to suggest games that align with individual tastes, providing targeted game discovery.",

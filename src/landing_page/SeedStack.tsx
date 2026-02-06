@@ -112,28 +112,39 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeig
 
     const isBelow = newTop + seedHeight > lineThreshold;
 
-    // Update rotation and progress bar state
-    const wasRotated = rotationRef.current[draggingId] === -125;
-    rotationRef.current[draggingId] = isBelow ? -125 : 0;
-
-    // If any packet is rotated, activate the progress bar
-    if (isBelow && !wasRotated) setProgressActive(true);
-    if (!isBelow && wasRotated) {
-      const isAnyRotated = Object.values(rotationRef.current).some(
-        (angle) => angle === -125
-      );
-      if (!isAnyRotated) setProgressActive(false); // Reset if no packets are rotated
+    const distanceFromGround = lineThreshold - (newTop + seedHeight);
+    
+    let targetRotation = 0;
+    if (isBelow) {
+      targetRotation = -125;
+    } else if (distanceFromGround < seedHeight * 0.5) {
+      const proximityRatio = Math.max(0, distanceFromGround / (seedHeight * 0.5));
+      const easedRatio = 1 - Math.pow(proximityRatio, 2);
+      targetRotation = -125 * easedRatio;
     }
 
-    // Update the position in real-time
+    const currentRotation = rotationRef.current[draggingId] || 0;
+    const rotationSpeed = isBelow ? 0.3 : 0.15; // Slower rotation when approaching ground
+    const newRotation = currentRotation + (targetRotation - currentRotation) * rotationSpeed;
+    
+    const wasRotated = rotationRef.current[draggingId] <= -120;
+    rotationRef.current[draggingId] = newRotation;
+
+    const isFullyRotated = newRotation <= -120;
+    if (isFullyRotated && !wasRotated) setProgressActive(true);
+    if (!isFullyRotated && wasRotated) {
+      const isAnyRotated = Object.values(rotationRef.current).some(
+        (angle) => angle <= -120
+      );
+      if (!isAnyRotated) setProgressActive(false);
+    }
+
     positionsRef.current[draggingId] = { top: newTop, left: newLeft };
     const seedElement = seedRefs.current[draggingId];
     if (seedElement) {
       seedElement.style.top = `${newTop}px`;
       seedElement.style.left = `${newLeft}px`;
-      seedElement.style.transform = `rotate(${
-        rotationRef.current[draggingId] || 0
-      }deg) scale(1.15)`; // Keep enlarged while dragging
+      seedElement.style.transform = `rotate(${newRotation}deg) scale(1.15)`;
     }
   };
 
@@ -208,7 +219,7 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeig
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
     };
-  }, []);
+  }, [freeze, lineThreshold, seedHeight]);
 
   return (
     <>

@@ -4,9 +4,7 @@
     "company": "Farmers Business Network",
     "companyLogo": "/images/FBN-logo.png",
     "date": "Mar 2026 – Present",
-    "skills": [
-      "🐍 Python"
-    ]
+    "skills": ["🐍 Python"]
   },
   {
     "role": "Software Engineer II",
@@ -17,7 +15,7 @@
       "⌨️ Typescript",
       "♨️ Java",
       "☁️ AWS",
-      "🐶 Datadog",
+      "🌎 Terraform",
       "⏱️ New Relic"
     ]
   },
@@ -32,6 +30,7 @@
       "💻 C/C++",
       "🐹 Golang",
       "☁️ AWS",
+      "🌎 Terraform",
       "🧱 Databricks",
       "🐙 Kubernetes",
       "🤖 Robotics",

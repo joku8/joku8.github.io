@@ -6,7 +6,22 @@ export function ExperienceTable() {
   const rows = experienceData.map((item, index) => (
     <tr key={index}>
       <td style={{ width: '30%' }}>{item.role}</td>
-      <td style={{ width: '23%' }}>{item.company}</td>
+      <td style={{ width: '23%' }}>
+        {item.companyLogo ? (
+          <img 
+            src={item.companyLogo} 
+            alt={item.company} 
+            style={{ 
+              maxHeight: '40px', 
+              maxWidth: '120px', 
+              objectFit: 'contain',
+              display: 'block'
+            }} 
+          />
+        ) : (
+          item.company
+        )}
+      </td>
       <td style={{ width: '10%' }}>{item.date}</td>
       <td style={{ width: '37%' }}>
         <BadgeGroup 

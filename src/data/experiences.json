@@ -1,8 +1,18 @@
 [
   {
+    "role": "Software Engineer",
+    "company": "Farmers Business Network",
+    "companyLogo": "/images/FBN-logo.png",
+    "date": "Mar 2026 – Present",
+    "skills": [
+      "🐍 Python"
+    ]
+  },
+  {
     "role": "Software Engineer II",
     "company": "John Deere",
-    "date": "Jan 2026 – Present",
+    "companyLogo": "/images/deere_logo.jpg",
+    "date": "Jan 2026 – Feb 2026",
     "skills": [
       "⌨️ Typescript",
       "♨️ Java",
@@ -14,6 +24,7 @@
   {
     "role": "Engineering Development Program - Product Engineer",
     "company": "John Deere",
+    "companyLogo": "/images/deere_logo.jpg",
     "date": "Jul 2024 – Jan 2026",
     "skills": [
       "⚙️ Automation",
@@ -32,6 +43,7 @@
   {
     "role": "Undergraduate Researcher - Dr. Elhan Ersoz",
     "company": "National Center for Supercomputing Applications (UIUC)",
+    "companyLogo": "/images/ncsa_logo.png",
     "date": "Aug 2023 – May 2024",
     "skills": [
       "🌾 Digital Agriculture",
@@ -45,6 +57,7 @@
   {
     "role": "Full Stack Software Engineer Intern/Part-time Student",
     "company": "Cargill",
+    "companyLogo": "/images/Cargill_logo.png",
     "date": "May 2023 – May 2024",
     "skills": [
       "📊 Data Analysis/Visualization",
@@ -56,6 +69,7 @@
   {
     "role": "Plant Biochemistry Research Intern - Dr. Aleksandra Skirycz",
     "company": "Boyce Thompson Institute",
+    "companyLogo": "/images/bti-logo.png",
     "date": "Summer 2022",
     "skills": [
       "📊 R (Data Analysis & Visualization)",
@@ -68,6 +82,7 @@
   {
     "role": "Chemistry Teaching Assistant (General & Organic)",
     "company": "University of Illinois at Urbana-Champaign",
+    "companyLogo": "/images/uiuc_banner.png",
     "date": "Aug 2021 - May 2024",
     "skills": ["🧪 Chemistry (General & Organic)", "👨‍🏫 Teaching"]
   }

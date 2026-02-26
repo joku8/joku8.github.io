@@ -44,6 +44,7 @@
     "company": "National Center for Supercomputing Applications (UIUC)",
     "companyLogo": "/images/ncsa_logo.png",
     "date": "Aug 2023 – May 2024",
+    "professorLink": "https://publish.illinois.edu/cyberagsynbio/team/professor/",
     "skills": [
       "🌾 Digital Agriculture",
       "🧬 Genetics",
@@ -70,6 +71,7 @@
     "company": "Boyce Thompson Institute",
     "companyLogo": "/images/bti-logo.png",
     "date": "Summer 2022",
+    "professorLink": "https://askiryczlab.org/lab-members/",
     "skills": [
       "📊 R (Data Analysis & Visualization)",
       "🧬 Biochemistry",

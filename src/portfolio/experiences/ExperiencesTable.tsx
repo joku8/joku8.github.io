@@ -3,9 +3,24 @@ import experienceData from '../../data/experiences.json';
 import { BadgeGroup } from '../../components/BadgeGroup';
 
 export function ExperienceTable() {
-  const rows = experienceData.map((item, index) => (
-    <tr key={index}>
-      <td style={{ width: '30%' }}>{item.role}</td>
+  const rows = experienceData.map((item, index) => {
+    const renderRole = () => {
+      if (item.professorLink) {
+        const parts = item.role.split(' - ');
+        if (parts.length === 2) {
+          return (
+            <>
+              {parts[0]} - <a href={item.professorLink} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>{parts[1]}</a>
+            </>
+          );
+        }
+      }
+      return item.role;
+    };
+
+    return (
+      <tr key={index}>
+        <td style={{ width: '30%' }}>{renderRole()}</td>
       <td style={{ width: '23%' }}>
         {item.companyLogo ? (
           <img 
@@ -31,7 +46,8 @@ export function ExperienceTable() {
         />
       </td>
     </tr>
-  ));
+    );
+  });
 
   return (
     <div style={{ overflowX: 'auto', overflowY: 'hidden', maxWidth: '100%' }}>

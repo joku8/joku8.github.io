@@ -5,12 +5,22 @@ import { BadgeGroup } from '../../components/BadgeGroup';
 export function ExperienceTable() {
   const rows = experienceData.map((item, index) => {
     const renderRole = () => {
-      if (item.professorLink) {
+      if (item.professorLink || item.internLink) {
         const parts = item.role.split(' - ');
         if (parts.length === 2) {
           return (
             <>
-              {parts[0]} - <a href={item.professorLink} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>{parts[1]}</a>
+              {item.internLink ? (
+                <a href={item.internLink} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>{parts[0]}</a>
+              ) : (
+                parts[0]
+              )}
+              {' - '}
+              {item.professorLink ? (
+                <a href={item.professorLink} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>{parts[1]}</a>
+              ) : (
+                parts[1]
+              )}
             </>
           );
         }
@@ -40,7 +50,7 @@ export function ExperienceTable() {
       <td style={{ width: '10%' }}>{item.date}</td>
       <td style={{ width: '37%' }}>
         <BadgeGroup 
-          badges={item.skills.map(skill => ({ emoji: '', label: skill }))} 
+          badges={item.skills} 
           spacing="xs" 
           variant="light" 
         />

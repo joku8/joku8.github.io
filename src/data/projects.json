@@ -6,13 +6,7 @@
     "type": "UIUC Hort Club Spring Plant Fair",
     "dates": "Apr 2024 – Present",
     "description": "Developing a lightweight React application for the Spring Plant Fair checkout station, streamlining payment workflows, configurable sales options, and real‑time analytics. The system has already supported 700+ transactions totaling $11K+ with zero downtime, and I'm continuing to expand its usability, including a new Barcode Scan feature for 2026. A key focus is refining the interface for non‑technical volunteers to improve efficiency during high‑traffic events.",
-    "badges": [
-      { "emoji": "☁️", "label": "AWS" },
-      { "emoji": "⚛️", "label": "React/JS" },
-      { "emoji": "🎨", "label": "Material UI" },
-      { "emoji": "📈", "label": "Data Collection" },
-      { "emoji": "👥", "label": "UI/UX" }
-    ],
+    "badges": ["AWS", "ReactJS/TS", "Material UI", "Data Science", "UI/UX"],
     "imageStyle": "contain",
     "buttons": [
       {
@@ -41,10 +35,7 @@
     "type": "Collaborative Project",
     "dates": "Jan 2026 – Present",
     "description": "GameScope is a web application designed to provide personalized video game recommendations based on user preferences and gameplay history. By utilizing machine learning algorithms, GameScope analyzes user data to suggest games that align with individual tastes, providing targeted game discovery.",
-    "badges": [
-      { "emoji": "🐍", "label": "Python/Jupyter Notebook" },
-      { "emoji": "🧠", "label": "Machine Learning" }
-    ],
+    "badges": ["Python", "Jupyter Notebook", "Machine Learning"],
     "imageStyle": "contain",
     "buttons": [
       {
@@ -70,12 +61,7 @@
     "type": "2024 Undergraduate Research Symposium",
     "dates": "Feb 2024 - Apr 2024",
     "description": "I built a machine learning model to predict plant traits from high-resolution TERRA-REF sensor data, identifying features linked to biomass and growth in Sorghum bicolor. This work demonstrates how data-driven approaches can optimize crop performance and reveal genotype responses to the environment.",
-    "badges": [
-      { "emoji": "🐍", "label": "Python" },
-      { "emoji": "🧠", "label": "Machine Learning" },
-      { "emoji": "🌾", "label": "Digital Agriculture" },
-      { "emoji": "📊", "label": "Data Science/Visualization" }
-    ],
+    "badges": ["Python", "Machine Learning", "Digital Agriculture", "Data Science"],
     "imageStyle": "cover",
     "buttons": [
       {
@@ -99,13 +85,7 @@
     "type": "HackIllinois 2023",
     "dates": "Mar 2023 - Nov 2023",
     "description": "A full-stack web app that helps farmers identify crop damage using image uploads and machine learning. Tracks pest and disease spread via location data, enabling real-time alerts and regional insights. Built with TensorFlow, Flask, MongoDB, and JavaScript.",
-    "badges": [
-      { "emoji": "🧠", "label": "Machine Learning (Tensorflow)" },
-      { "emoji": "🐍", "label": "Python + Flask" },
-      { "emoji": "🎨", "label": "Material UI" },
-      { "emoji": "📈", "label": "Data Collection" },
-      { "emoji": "🌾", "label": "Digital Agriculture" }
-    ],
+    "badges": ["Machine Learning", "Python", "Flask", "Material UI", "Data Science", "Digital Agriculture"],
     "imageStyle": "cover",
     "buttons": [
       {

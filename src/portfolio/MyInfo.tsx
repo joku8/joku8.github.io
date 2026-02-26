@@ -66,7 +66,7 @@ export function MyInfo() {
         </Group>
       <Group spacing="md">
         <Image src="/images/uiuc_banner.png" className={classes.image} />
-        <Image src="/images/deere_logo.jpg" className={classes.image} />
+        <Image src="/images/FBN-full.png" className={classes.image} />
       </Group>
       </div>
       <Image src="/images/pfp.png" className={classes.image} />

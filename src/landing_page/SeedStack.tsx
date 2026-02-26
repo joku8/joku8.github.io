@@ -3,15 +3,15 @@ import React, { useEffect, useRef, useState } from "react";
 interface SeedPacket {
   id: string;
   image: string;
-  zIndex: number; // Original z-index
+  zIndex: number;
   originalPosition: { top: number; left: number };
 }
 
 interface SeedStackProps {
   setProgressActive: (isActive: boolean) => void;
-  freeze: boolean; // Disable interactions if true
-  vpHeight: number; // Viewport Height
-  vpWidth: number; // Viewport Width
+  freeze: boolean;
+  vpHeight: number;
+  vpWidth: number;
 }
 
 const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeight, vpWidth }) => {
@@ -22,7 +22,7 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeig
     left: vpWidth - 20 - seedWidth,
   };
   
-  const lineThreshold = 0.75 * vpHeight; // 25% from bottom
+  const lineThreshold = 0.75 * vpHeight;
 
   const seedRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const rotationRef = useRef<{ [key: string]: number }>({});
@@ -40,7 +40,7 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeig
       zIndex: 3,
       originalPosition: {
         ...basePosition,
-        top: basePosition.top + 0.1 * vpHeight, // Offset by 10% of viewport height
+        top: basePosition.top + 0.1 * vpHeight,
       },
     },
     {
@@ -49,7 +49,7 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeig
       zIndex: 2,
       originalPosition: {
         ...basePosition,
-        top: basePosition.top + 0.05 * vpHeight, // Offset by 5% of viewport height
+        top: basePosition.top + 0.05 * vpHeight,
       },
     },
     {
@@ -58,7 +58,7 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeig
       zIndex: 1,
       originalPosition: {
         ...basePosition,
-        top: basePosition.top, // No offset
+        top: basePosition.top,
       },
     },
   ]);
@@ -77,7 +77,7 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeig
   );
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>, id: string) => {
-    if (freeze) return; // Disable interaction when frozen
+    if (freeze) return;
 
     e.preventDefault();
 
@@ -88,18 +88,17 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeig
       offsetY: e.clientY - rect.top,
     };
 
-    // Temporarily bring the dragged item to the front
     seeds.forEach((seed) => {
       if (seed.id === id) {
         seed.zIndex = Math.max(...seeds.map((s) => s.zIndex)) + 1;
       }
     });
 
-    setSelectedSeed(id); // Mark this seed as selected
+    setSelectedSeed(id);
   };
 
   const handleMouseMove = (e: MouseEvent) => {
-    if (freeze) return; // Disable dragging when frozen
+    if (freeze) return;
 
     const draggingId = draggingRef.current.id;
     if (!draggingId) return;
@@ -124,7 +123,7 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeig
     }
 
     const currentRotation = rotationRef.current[draggingId] || 0;
-    const rotationSpeed = isBelow ? 0.3 : 0.15; // Slower rotation when approaching ground
+    const rotationSpeed = isBelow ? 0.3 : 0.15;
     const newRotation = currentRotation + (targetRotation - currentRotation) * rotationSpeed;
     
     const wasRotated = rotationRef.current[draggingId] <= -120;
@@ -150,7 +149,6 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeig
 
   const handleMouseUp = () => {
     if (freeze) {
-      // Reset all seed packets to their original position
       Object.keys(seedRefs.current).forEach((id) => {
         const seed = seedRefs.current[id];
         const originalPosition = seeds.find(
@@ -168,7 +166,6 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeig
     const draggingId = draggingRef.current.id;
     if (!draggingId) return;
 
-    // Snap back to original position
     const originalPosition = seeds.find(
       (seed) => seed.id === draggingId
     )!.originalPosition;
@@ -179,15 +176,14 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeig
         "top 0.3s ease, left 0.3s ease, transform 0.3s ease";
       seedElement.style.top = `${originalPosition.top}px`;
       seedElement.style.left = `${originalPosition.left}px`;
-      seedElement.style.transform = "rotate(0deg) scale(1)"; // Reset size after release
+      seedElement.style.transform = "rotate(0deg) scale(1)";
     }
 
     positionsRef.current[draggingId] = originalPosition;
     rotationRef.current[draggingId] = 0;
     setProgressActive(false);
-    setSelectedSeed(null); // Deselect the seed
+    setSelectedSeed(null);
 
-    // Reset z-index to the original value
     seeds.forEach((seed) => {
       if (seed.id === draggingId) {
         seed.zIndex = originalZIndexes.current[draggingId];
@@ -196,7 +192,6 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeig
 
     draggingRef.current = { id: null, offsetX: 0, offsetY: 0 };
 
-    // Remove transition after snap-back
     setTimeout(() => {
       if (seedElement) seedElement.style.transition = "";
     }, 300);
@@ -231,7 +226,7 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeig
             position: "absolute",
             top:
               hoveredSeed === seed.id && !selectedSeed
-                ? seed.originalPosition.top - 0.05 * seedHeight // Hover effect: rise by 10% of height
+                ? seed.originalPosition.top - 0.05 * seedHeight
                 : seed.originalPosition.top,
             left: seed.originalPosition.left,
             zIndex: seed.zIndex,
@@ -242,9 +237,9 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeig
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
             transform: `rotate(${rotationRef.current[seed.id] || 0}deg) ${
-              selectedSeed === seed.id ? "scale(1.15)" : "scale(1)" // Enlarge when selected
+              selectedSeed === seed.id ? "scale(1.15)" : "scale(1)"
             }`,
-            transition: "top 0.4s ease, transform 0.3s ease", // Slower hover rise
+            transition: "top 0.4s ease, transform 0.3s ease",
             cursor: "grab",
           }}
           onMouseDown={(e) => handleMouseDown(e, seed.id)}

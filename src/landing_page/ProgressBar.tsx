@@ -6,7 +6,7 @@ interface ProgressBarProps {
   left: number;
   width: number;
   top: string;
-  freeze?: boolean; // New prop to freeze progress bar
+  freeze?: boolean;
 }
 
 const ProgressBar: React.FC<ProgressBarProps> = ({
@@ -18,10 +18,10 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   freeze = false,
 }) => {
   const [progress, setProgress] = useState(0);
-  const [isComplete, setIsComplete] = useState(false); // Local state to track completion
+  const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
-    if (freeze) return; // Freeze the progress bar if needed
+    if (freeze) return;
 
     let interval: ReturnType<typeof setInterval> | null = null;
 
@@ -48,7 +48,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
 
   useEffect(() => {
     if (isComplete) {
-      onComplete(); // Notify parent only when progress reaches 100%
+      onComplete();
     }
   }, [isComplete, onComplete]);
 
@@ -62,7 +62,6 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
         textAlign: "center",
       }}
     >
-      {/* Title */}
       <div
         style={{
           fontSize: "16px",
@@ -73,7 +72,6 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
         Planting Progress
       </div>
 
-      {/* Progress Bar */}
       <div
         style={{
           width: "100%",
@@ -87,7 +85,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
           style={{
             width: `${progress}%`,
             height: "100%",
-            backgroundColor: "#4caf50", // Green when frozen or filling
+            backgroundColor: "#4caf50",
             transition: "width 0.1s linear",
           }}
         />

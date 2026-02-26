@@ -1,6 +1,6 @@
 import { Image, SimpleGrid, Title } from "@mantine/core";
 
-const imageFolder = "/images/volunteering"; // relative to /public
+const imageFolder = "/images/volunteering";
 
 export const Volunteering = () => {
   const imageList = ["PCMG.png", "GDMBG.jpg", "GDMCB.jpg", "CIOS.png"];

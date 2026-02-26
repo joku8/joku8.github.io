@@ -7,27 +7,27 @@ interface SignProps {
 const ContinueSign: React.FC<SignProps> = ({ onClick }) => {
   const viewportWidth = window.innerWidth;
   const viewportHeight = window.innerHeight;
-  const signWidth = 0.2 * viewportHeight; // Scales dynamically
-  const signHeight = signWidth * 1.2; // Adjust aspect ratio
+  const signWidth = 0.2 * viewportHeight;
+  const signHeight = signWidth * 1.2;
 
-  const leftPosition = 0.9 * viewportWidth - signWidth / 2; // Center at 90% of viewport width
-  const bottomPosition = "8vh"; // Align with the top of the dirt layer
+  const leftPosition = 0.9 * viewportWidth - signWidth / 2;
+  const bottomPosition = "8vh";
 
   const [rotation, setRotation] = useState(0);
   const [hasHovered, setHasHovered] = useState(false);
 
   const handleMouseEnter = () => {
-    if (hasHovered) return; // Prevent animation replay during same hover event
+    if (hasHovered) return;
 
     setHasHovered(true);
     let step = 0;
-    const wiggleSequence = [-10, 20, -10, 0]; // Rotation degrees
+    const wiggleSequence = [-10, 20, -10, 0];
 
     const animateWiggle = () => {
       if (step < wiggleSequence.length) {
         setRotation(wiggleSequence[step]);
         step++;
-        setTimeout(animateWiggle, 375); // 1.5s total duration (375ms per step)
+        setTimeout(animateWiggle, 375);
       }
     };
 
@@ -35,7 +35,7 @@ const ContinueSign: React.FC<SignProps> = ({ onClick }) => {
   };
 
   const handleMouseLeave = () => {
-    setHasHovered(false); // Reset so animation can play again next time
+    setHasHovered(false);
   };
 
   return (
@@ -54,7 +54,7 @@ const ContinueSign: React.FC<SignProps> = ({ onClick }) => {
         backgroundSize: "contain",
         backgroundPosition: "center",
         cursor: "pointer",
-        transformOrigin: "bottom center", // Rotate from midpoint of bottom edge
+        transformOrigin: "bottom center",
         transform: `rotate(${rotation}deg)`,
         transition: "transform 375ms ease-in-out",
       }}

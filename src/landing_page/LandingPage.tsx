@@ -33,7 +33,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
     const isMobile = /Mobi|Android|iPhone|iPad|iPod/.test(navigator.userAgent) || window.innerWidth < 768;
     
     if (isMobile) {
-      setShowPortfolio(true); // Bypass landing page for mobile devices
+      setShowPortfolio(true);
     }
   }, [setShowPortfolio]);
   
@@ -42,7 +42,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
     setFadeOut(true);
     setTimeout(() => {
       setShowPortfolio(true);
-    }, 1000); // 1-second fade effect
+    }, 1000);
   };
 
   useEffect(() => {
@@ -51,19 +51,11 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
         setFadeOut(true);
         setTimeout(() => {
           setShowPortfolio(true);
-        }, 1000); // 1-second fade effect
+        }, 1000);
       }, 1500);
       return () => clearTimeout(timer);
     }
   }, [isThirdLineDone, setShowPortfolio]);
-
-  // const viewportWidth = window.innerWidth;
-  // const sunWidth = 0.12 * viewportWidth;
-  // const seedPacketWidth = 0.3 * window.innerHeight * (1 / 1.5);
-
-  // const progressBarLeft = sunWidth + 30;
-  // const progressBarRight = viewportWidth - seedPacketWidth - 30;
-  // const progressBarWidth = progressBarRight - progressBarLeft;
 
   const sunWidth = 0.12 * viewportWidth;
   const seedPacketWidth = 0.3 * viewportHeight * (1 / 1.5);
@@ -75,7 +67,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
   return (
     <div
       style={{
-        backgroundColor: fadeOut ? "#ffffff" : "#87ceeb", // Fades to white
+        backgroundColor: fadeOut ? "#ffffff" : "#87ceeb",
         height: "100vh",
         width: "100vw",
         margin: 0,
@@ -86,7 +78,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
         opacity: fadeOut ? 0 : 1,
       }}
     >
-      {/* Welcome Text*/}
       <div
         style={{
           position: "absolute",
@@ -94,45 +85,41 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
           left: `${progressBarLeft}px`,
           fontFamily: "'Courier New', Courier, monospace",
           fontSize: "5vh",
-          color: "darkgreen", // No fading, remains dark green
+          color: "darkgreen",
           textAlign: "left",
           lineHeight: "1.5",
           userSelect: "none",
         }}
       >
-        {/* Line 1 */}
         <div>
           <Typewriter
             text="Welcome to Joe's Garden!"
             onComplete={() => setIsFirstLineDone(true)}
-            hideCursor={isFirstLineDone} // Hides cursor only when Line 2 starts
+            hideCursor={isFirstLineDone}
           />
         </div>
 
-        {/* Line 2 */}
         <div>
           {isFirstLineDone && (
             <Typewriter
               text="Sow some seeds to begin..."
               onComplete={() => setIsSecondLineDone(true)}
-              hideCursor={isProgressComplete} // Hides cursor only when Line 3 starts
+              hideCursor={isProgressComplete}
             />
           )}
         </div>
 
-        {/* Line 3 */}
         <div>
           {isSecondLineDone && isProgressComplete && (
             <Typewriter
               text="Planting Complete..."
               onComplete={() => setIsThirdLineDone(true)}
-              hideCursor={false} // Cursor remains blinking after final line finishes
+              hideCursor={false}
             />
           )}
         </div>
       </div>
 
-      {/* Progress Bar */}
       <ProgressBar
         isFilling={isProgressActive}
         onComplete={() => setIsProgressComplete(true)}
@@ -142,7 +129,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
         freeze={isProgressComplete}
       />
 
-      {/* Sun image*/}
       <div
         style={{
           position: "absolute",
@@ -157,7 +143,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
         }}
       />
 
-      {/* Seed Stack */}
       <SeedStack
         setProgressActive={setIsProgressActive}
         freeze={isProgressComplete}
@@ -165,12 +150,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
         vpWidth={viewportWidth}
       />
 
-      {/* Continue Sign */}
       <ContinueSign
         onClick={handleSignClick}
       />
 
-      {/* Soil Layer (Always visible) */}
       <div
         style={{
           position: "absolute",

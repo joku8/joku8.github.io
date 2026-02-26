@@ -108,6 +108,16 @@ const PlantTrivia: React.FC = () => {
                         : 'red'
                       : 'gray'
                   }
+                  styles={{
+                    root: {
+                      height: 'auto',
+                      padding: '12px 16px',
+                    },
+                    label: {
+                      whiteSpace: 'normal',
+                      textAlign: 'left',
+                    },
+                  }}
                 >
                   {ans}
                 </Button>

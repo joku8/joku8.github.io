@@ -4,7 +4,7 @@
     "company": "Farmers Business Network",
     "companyLogo": "/images/FBN-logo.png",
     "date": "Mar 2026 – Present",
-    "skills": ["🐍 Python"]
+    "skills": ["Python"]
   },
   {
     "role": "Software Engineer II",
@@ -12,11 +12,11 @@
     "companyLogo": "/images/deere_logo.jpg",
     "date": "Jan 2026 – Feb 2026",
     "skills": [
-      "⌨️ Typescript",
-      "♨️ Java",
-      "☁️ AWS",
-      "🌎 Terraform",
-      "⏱️ New Relic"
+      "Typescript",
+      "Java",
+      "AWS",
+      "Terraform",
+      "New Relic"
     ]
   },
   {
@@ -25,18 +25,18 @@
     "companyLogo": "/images/deere_logo.jpg",
     "date": "Jul 2024 – Jan 2026",
     "skills": [
-      "⚙️ Automation",
-      "🐍 Python",
-      "💻 C/C++",
-      "🐹 Golang",
-      "☁️ AWS",
-      "🌎 Terraform",
-      "🧱 Databricks",
-      "🐙 Kubernetes",
-      "🤖 Robotics",
-      "📊 Data Visualization",
-      "⚛️ ReactJS/TS",
-      "🦀 Rust"
+      "Automation",
+      "Python",
+      "C/C++",
+      "Golang",
+      "AWS",
+      "Terraform",
+      "Databricks",
+      "Kubernetes",
+      "Robotics",
+      "Data Visualization",
+      "ReactJS/TS",
+      "Rust"
     ]
   },
   {
@@ -46,12 +46,12 @@
     "date": "Aug 2023 – May 2024",
     "professorLink": "https://publish.illinois.edu/cyberagsynbio/team/professor/",
     "skills": [
-      "🌾 Digital Agriculture",
-      "🧬 Genetics",
-      "🧠 Machine Learning",
-      "🌱 Crop Breeding",
-      "📊 Data Analysis/Visualization",
-      "🐍 Python"
+      "Digital Agriculture",
+      "Genetics",
+      "Machine Learning",
+      "Crop Breeding",
+      "Data Science",
+      "Python"
     ]
   },
   {
@@ -60,10 +60,10 @@
     "companyLogo": "/images/Cargill_logo.png",
     "date": "May 2023 – May 2024",
     "skills": [
-      "📊 Data Analysis/Visualization",
-      "⚛️ React/JS",
-      "🎨 Material UI",
-      "🐍 Python"
+      "Data Science",
+      "ReactJS/TS",
+      "Material UI",
+      "Python"
     ]
   },
   {
@@ -72,12 +72,13 @@
     "companyLogo": "/images/bti-logo.png",
     "date": "Summer 2022",
     "professorLink": "https://askiryczlab.org/lab-members/",
+    "internLink": "https://btiscience.org/educational-programs/internships/interns/ku/",
     "skills": [
-      "📊 R (Data Analysis & Visualization)",
-      "🧬 Biochemistry",
-      "🧫 Enzymology",
-      "🧪 Wet Lab Techniques",
-      "🦠 Cell Culture"
+      "Data Science",
+      "Biochemistry",
+      "Enzymology",
+      "Wet Lab Techniques",
+      "Cell Culture"
     ]
   },
   {
@@ -85,6 +86,6 @@
     "company": "University of Illinois at Urbana-Champaign",
     "companyLogo": "/images/uiuc_banner.png",
     "date": "Aug 2021 - May 2024",
-    "skills": ["🧪 Chemistry (General & Organic)", "👨‍🏫 Teaching"]
+    "skills": ["Chemistry (General & Organic)", "Teaching"]
   }
 ]

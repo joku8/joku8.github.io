@@ -1,0 +1,31 @@
+[
+  {
+    "title": "Breaking Dormancy: Reviving the UIUC Horticulture Club",
+    "source": "UIUC Crop Sciences - Horticulture",
+    "date": "December 11, 2023",
+    "types": ["blog"],
+    "urls": ["https://horticulture.cropsciences.illinois.edu/2023/12/11/breaking-dormancy-reviving-the-uiuc-horticulture-club/"],
+    "description": "Blog post about reviving the UIUC Horticulture Club"
+  },
+  {
+    "title": "UI hosts 2nd annual Spring Plant Fair for Mom's Weekend",
+    "source": "WCIA",
+    "date": "April 13, 2024",
+    "types": ["article", "video"],
+    "urls": [
+      "https://www.wcia.com/news/local-news/ui-hosts-2nd-annual-spring-plant-fair-for-moms-weekend/",
+      "https://www.youtube.com/watch?v=8T1O_-6Rf1s"
+    ],
+    "embedId": "8T1O_-6Rf1s",
+    "description": "Coverage of the 2024 UIUC Horticulture Club Spring Plant Fair"
+  },
+  {
+    "title": "Cultivating Roots & Circuits - My Journey Through UIUC CS + Crop Science",
+    "source": "CyberAg + SynBio Lab @ UIUC",
+    "date": "April 4, 2025",
+    "types": ["video"],
+    "urls": ["https://www.youtube.com/watch?v=PPthPLqal_E"],
+    "embedId": "PPthPLqal_E",
+    "description": "Interview about my journey through UIUC CS + Crop Science and beyond"
+  }
+]

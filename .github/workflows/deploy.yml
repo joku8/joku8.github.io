@@ -36,16 +36,22 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: "1.6.0"
+          terraform_wrapper: false
 
-      - name: Get S3 bucket name from Terraform
+      - name: Initialize and Apply Terraform
         id: terraform-output
         run: |
           cd terraform
           terraform init
+          terraform apply -auto-approve
           BUCKET_NAME=$(terraform output -raw s3_bucket_name)
           DISTRIBUTION_ID=$(terraform output -raw cloudfront_distribution_id)
           echo "bucket_name=$BUCKET_NAME" >> $GITHUB_OUTPUT
           echo "distribution_id=$DISTRIBUTION_ID" >> $GITHUB_OUTPUT
+        env:
+          TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          TF_VAR_domain_name: ${{ secrets.DOMAIN_NAME }}
+          TF_VAR_aws_region: us-east-1
 
       - name: Sync to S3
         run: |

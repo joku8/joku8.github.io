@@ -5,20 +5,27 @@
     "title": "PlantPass: Spring Plant Fair Checkout and Revenue Tracking Application",
     "type": "UIUC Hort Club Spring Plant Fair",
     "dates": "Apr 2024 – Present",
-    "description": "Developing a lightweight React application for the Spring Plant Fair checkout station, streamlining payment workflows, configurable sales options, and real‑time analytics. The system has already supported 700+ transactions totaling $11K+ with zero downtime, and I'm continuing to expand its usability, including a new Barcode Scan feature for 2026. A key focus is refining the interface for non‑technical volunteers to improve efficiency during high‑traffic events.",
+    "description": "Developing a lightweight React application for the Spring Plant Fair checkout station, streamlining payment workflows, configurable sales options, and real‑time analytics. The system has already supported 700+ transactions totaling $11K+ with zero downtime, and I'm continuing to expand its usability. A key focus is refining the interface for non‑technical volunteers to improve efficiency during high‑traffic events.",
     "badges": ["AWS", "Terraform", "ReactJS/TS", "Material UI", "Data Science", "UI/UX"],
     "imageStyle": "contain",
     "buttons": [
       {
-        "label": "Try it out!",
+        "label": "Hort Club PlantPass 2026",
         "href": "https://www.hortclubplantpass.org/",
         "variant": "filled"
       },
       {
-        "label": "Open Github Repo",
-        "href": "https://github.com/joku8/PlantPass",
+        "label": "Frontend Github Repo",
+        "href": "https://github.com/UIUC-Hort-Club/plantpass-frontend",
         "icon": "github",
-        "tooltip": "Open Github Repo",
+        "tooltip": "Frontend Github Repo",
+        "isIconOnly": true
+      },
+      {
+        "label": "Backend Github Repo",
+        "href": "https://github.com/UIUC-Hort-Club/plantpass-backend",
+        "icon": "github",
+        "tooltip": "Backend Github Repo",
         "isIconOnly": true
       },
       {

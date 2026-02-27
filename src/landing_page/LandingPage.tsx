@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import SeedStack from "./SeedStack";
 import ProgressBar from "./ProgressBar";
 import Typewriter from "./Typewriter";
@@ -37,13 +37,12 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
     }
   }, [setShowPortfolio]);
   
-
-  const handleSignClick = () => {
+  const handleSignClick = useCallback(() => {
     setFadeOut(true);
     setTimeout(() => {
       setShowPortfolio(true);
     }, 1000);
-  };
+  }, [setShowPortfolio]);
 
   useEffect(() => {
     if (isThirdLineDone) {
@@ -57,11 +56,15 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
     }
   }, [isThirdLineDone, setShowPortfolio]);
 
-  const sunWidth = 0.12 * viewportWidth;
-  const seedPacketWidth = 0.3 * viewportHeight * (1 / 1.5);
-  const progressBarLeft = sunWidth + 30;
-  const progressBarRight = viewportWidth - seedPacketWidth - 30;
-  const progressBarWidth = progressBarRight - progressBarLeft;
+  const layout = useMemo(() => {
+    const sunWidth = 0.12 * viewportWidth;
+    const seedPacketWidth = 0.3 * viewportHeight * (1 / 1.5);
+    const progressBarLeft = sunWidth + 30;
+    const progressBarRight = viewportWidth - seedPacketWidth - 30;
+    const progressBarWidth = progressBarRight - progressBarLeft;
+    
+    return { sunWidth, progressBarLeft, progressBarWidth };
+  }, [viewportWidth, viewportHeight]);
 
 
   return (
@@ -82,7 +85,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
         style={{
           position: "absolute",
           top: "25vh",
-          left: `${progressBarLeft}px`,
+          left: `${layout.progressBarLeft}px`,
           fontFamily: "'Courier New', Courier, monospace",
           fontSize: "5vh",
           color: "darkgreen",
@@ -91,40 +94,38 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
           userSelect: "none",
         }}
       >
-        <div>
-          <Typewriter
-            text="Welcome to Joe's Garden!"
-            onComplete={() => setIsFirstLineDone(true)}
-            hideCursor={isFirstLineDone}
-          />
-        </div>
+        <Typewriter
+          text="Welcome to Joe's Garden!"
+          onComplete={() => setIsFirstLineDone(true)}
+          hideCursor={isFirstLineDone}
+        />
 
-        <div>
-          {isFirstLineDone && (
+        {isFirstLineDone && (
+          <div>
             <Typewriter
               text="Sow some seeds to begin..."
               onComplete={() => setIsSecondLineDone(true)}
               hideCursor={isProgressComplete}
             />
-          )}
-        </div>
+          </div>
+        )}
 
-        <div>
-          {isSecondLineDone && isProgressComplete && (
+        {isSecondLineDone && isProgressComplete && (
+          <div>
             <Typewriter
               text="Planting Complete..."
               onComplete={() => setIsThirdLineDone(true)}
               hideCursor={false}
             />
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       <ProgressBar
         isFilling={isProgressActive}
         onComplete={() => setIsProgressComplete(true)}
-        left={progressBarLeft}
-        width={progressBarWidth}
+        left={layout.progressBarLeft}
+        width={layout.progressBarWidth}
         top={"5vh"}
         freeze={isProgressComplete}
       />
@@ -134,7 +135,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
           position: "absolute",
           top: 0,
           left: 0,
-          width: `${sunWidth}px`,
+          width: `${layout.sunWidth}px`,
           height: "20vh",
           backgroundImage: "url('/artifacts/sun.png')",
           backgroundRepeat: "no-repeat",

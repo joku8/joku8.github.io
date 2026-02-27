@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
 
 interface SeedPacket {
   id: string;
@@ -17,23 +17,22 @@ interface SeedStackProps {
 const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeight, vpWidth }) => {
   const seedHeight = 0.3 * vpHeight;
   const seedWidth = seedHeight * (1 / 1.5);
-  const basePosition = {
+  const basePosition = useMemo(() => ({
     top: 20,
     left: vpWidth - 20 - seedWidth,
-  };
+  }), [vpWidth, seedWidth]);
   
   const lineThreshold = 0.75 * vpHeight;
 
   const seedRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const rotationRef = useRef<{ [key: string]: number }>({});
-  const positionsRef = useRef<{ [key: string]: { top: number; left: number } }>(
-    {}
-  );
+  const animationFrameRef = useRef<number>();
 
   const [hoveredSeed, setHoveredSeed] = useState<string | null>(null);
   const [selectedSeed, setSelectedSeed] = useState<string | null>(null);
+  const [zIndexes, setZIndexes] = useState<{ [key: string]: number }>({});
 
-  const [seeds] = React.useState<SeedPacket[]>([
+  const seeds = useMemo<SeedPacket[]>(() => [
     {
       id: "carrot",
       image: "/artifacts/carrot_seed_packet.png",
@@ -61,13 +60,15 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeig
         top: basePosition.top,
       },
     },
-  ]);
+  ], [basePosition, vpHeight]);
 
   const draggingRef = useRef<{
     id: string | null;
     offsetX: number;
     offsetY: number;
-  }>({ id: null, offsetX: 0, offsetY: 0 });
+    mouseX: number;
+    mouseY: number;
+  }>({ id: null, offsetX: 0, offsetY: 0, mouseX: 0, mouseY: 0 });
 
   const originalZIndexes = useRef<{ [key: string]: number }>(
     seeds.reduce((acc, seed) => {
@@ -76,135 +77,116 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeig
     }, {} as { [key: string]: number })
   );
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>, id: string) => {
-    if (freeze) return;
+  useEffect(() => {
+    setZIndexes(originalZIndexes.current);
+  }, []);
 
-    e.preventDefault();
+  const updateSeedTransform = useCallback((id: string, top: number, left: number, rotation: number, scale: number) => {
+    const seedElement = seedRefs.current[id];
+    if (seedElement) {
+      seedElement.style.transform = `translate(${left}px, ${top}px) rotate(${rotation}deg) scale(${scale})`;
+    }
+  }, []);
 
-    const rect = seedRefs.current[id]!.getBoundingClientRect();
-    draggingRef.current = {
-      id,
-      offsetX: e.clientX - rect.left,
-      offsetY: e.clientY - rect.top,
-    };
-
-    seeds.forEach((seed) => {
-      if (seed.id === id) {
-        seed.zIndex = Math.max(...seeds.map((s) => s.zIndex)) + 1;
-      }
-    });
-
-    setSelectedSeed(id);
-  };
-
-  const handleMouseMove = (e: MouseEvent) => {
+  const animate = useCallback(() => {
     if (freeze) return;
 
     const draggingId = draggingRef.current.id;
     if (!draggingId) return;
 
-    const offsetX = draggingRef.current.offsetX;
-    const offsetY = draggingRef.current.offsetY;
-
-    const newTop = e.clientY - offsetY;
-    const newLeft = e.clientX - offsetX;
-
-    const isBelow = newTop + seedHeight > lineThreshold;
+    const { mouseX, mouseY, offsetX, offsetY } = draggingRef.current;
+    const newTop = mouseY - offsetY;
+    const newLeft = mouseX - offsetX;
 
     const distanceFromGround = lineThreshold - (newTop + seedHeight);
+    const currentRotation = rotationRef.current[draggingId] || 0;
     
     let targetRotation = 0;
-    if (isBelow) {
+    if (distanceFromGround < 0) {
       targetRotation = -125;
     } else if (distanceFromGround < seedHeight * 0.5) {
-      const proximityRatio = Math.max(0, distanceFromGround / (seedHeight * 0.5));
+      const proximityRatio = distanceFromGround / (seedHeight * 0.5);
       const easedRatio = 1 - Math.pow(proximityRatio, 2);
       targetRotation = -125 * easedRatio;
     }
 
-    const currentRotation = rotationRef.current[draggingId] || 0;
-    const rotationSpeed = isBelow ? 0.3 : 0.15;
+    const rotationSpeed = distanceFromGround < 0 ? 0.4 : 0.2;
     const newRotation = currentRotation + (targetRotation - currentRotation) * rotationSpeed;
     
-    const wasRotated = rotationRef.current[draggingId] <= -120;
+    const wasRotated = currentRotation <= -120;
+    const isFullyRotated = newRotation <= -120;
+    
     rotationRef.current[draggingId] = newRotation;
 
-    const isFullyRotated = newRotation <= -120;
-    if (isFullyRotated && !wasRotated) setProgressActive(true);
-    if (!isFullyRotated && wasRotated) {
-      const isAnyRotated = Object.values(rotationRef.current).some(
-        (angle) => angle <= -120
-      );
-      if (!isAnyRotated) setProgressActive(false);
+    if (isFullyRotated !== wasRotated) {
+      setProgressActive(isFullyRotated);
     }
 
-    positionsRef.current[draggingId] = { top: newTop, left: newLeft };
-    const seedElement = seedRefs.current[draggingId];
-    if (seedElement) {
-      seedElement.style.top = `${newTop}px`;
-      seedElement.style.left = `${newLeft}px`;
-      seedElement.style.transform = `rotate(${newRotation}deg) scale(1.15)`;
-    }
-  };
+    updateSeedTransform(draggingId, newTop, newLeft, newRotation, 1.15);
+    animationFrameRef.current = requestAnimationFrame(animate);
+  }, [freeze, lineThreshold, seedHeight, setProgressActive, updateSeedTransform]);
 
-  const handleMouseUp = () => {
-    if (freeze) {
-      Object.keys(seedRefs.current).forEach((id) => {
-        const seed = seedRefs.current[id];
-        const originalPosition = seeds.find(
-          (s) => s.id === id
-        )!.originalPosition;
+  const handleMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>, id: string) => {
+    if (freeze) return;
+    e.preventDefault();
 
-        if (seed) {
-          seed.style.top = `${originalPosition.top}px`;
-          seed.style.left = `${originalPosition.left}px`;
-          seed.style.transform = "rotate(0deg)";
-        }
-      });
-      return;
+    const rect = seedRefs.current[id]!.getBoundingClientRect();
+    const seed = seeds.find(s => s.id === id)!;
+    
+    draggingRef.current = {
+      id,
+      offsetX: e.clientX - seed.originalPosition.left,
+      offsetY: e.clientY - seed.originalPosition.top,
+      mouseX: e.clientX,
+      mouseY: e.clientY,
+    };
+
+    setZIndexes(prev => ({
+      ...prev,
+      [id]: Math.max(...Object.values(prev)) + 1
+    }));
+    setSelectedSeed(id);
+
+    animationFrameRef.current = requestAnimationFrame(animate);
+  }, [freeze, seeds, animate]);
+
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (draggingRef.current.id) {
+      draggingRef.current.mouseX = e.clientX;
+      draggingRef.current.mouseY = e.clientY;
     }
+  }, []);
+
+  const handleMouseUp = useCallback(() => {
     const draggingId = draggingRef.current.id;
     if (!draggingId) return;
 
-    const originalPosition = seeds.find(
-      (seed) => seed.id === draggingId
-    )!.originalPosition;
-
-    const seedElement = seedRefs.current[draggingId];
-    if (seedElement) {
-      seedElement.style.transition =
-        "top 0.3s ease, left 0.3s ease, transform 0.3s ease";
-      seedElement.style.top = `${originalPosition.top}px`;
-      seedElement.style.left = `${originalPosition.left}px`;
-      seedElement.style.transform = "rotate(0deg) scale(1)";
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
     }
 
-    positionsRef.current[draggingId] = originalPosition;
+    const originalPosition = seeds.find(seed => seed.id === draggingId)!.originalPosition;
+    const seedElement = seedRefs.current[draggingId];
+    
+    if (seedElement) {
+      seedElement.style.transition = "transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)";
+      updateSeedTransform(draggingId, originalPosition.top, originalPosition.left, 0, 1);
+      
+      setTimeout(() => {
+        if (seedElement) seedElement.style.transition = "";
+      }, 300);
+    }
+
     rotationRef.current[draggingId] = 0;
     setProgressActive(false);
     setSelectedSeed(null);
+    setZIndexes(prev => ({
+      ...prev,
+      [draggingId]: originalZIndexes.current[draggingId]
+    }));
 
-    seeds.forEach((seed) => {
-      if (seed.id === draggingId) {
-        seed.zIndex = originalZIndexes.current[draggingId];
-      }
-    });
-
-    draggingRef.current = { id: null, offsetX: 0, offsetY: 0 };
-
-    setTimeout(() => {
-      if (seedElement) seedElement.style.transition = "";
-    }, 300);
-  };
-
-  const handleMouseEnter = (id: string) => {
-    if (freeze) return;
-    setHoveredSeed(id);
-  };
-
-  const handleMouseLeave = (id: string) => {
-    setHoveredSeed((current) => (current === id ? null : current));
-  };
+    draggingRef.current = { id: null, offsetX: 0, offsetY: 0, mouseX: 0, mouseY: 0 };
+  }, [seeds, setProgressActive, updateSeedTransform]);
 
   useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove);
@@ -213,8 +195,11 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeig
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
     };
-  }, [freeze, lineThreshold, seedHeight]);
+  }, [handleMouseMove, handleMouseUp]);
 
   return (
     <>
@@ -224,28 +209,28 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeig
           ref={(el) => (seedRefs.current[seed.id] = el)}
           style={{
             position: "absolute",
-            top:
-              hoveredSeed === seed.id && !selectedSeed
-                ? seed.originalPosition.top - 0.05 * seedHeight
-                : seed.originalPosition.top,
-            left: seed.originalPosition.left,
-            zIndex: seed.zIndex,
+            top: 0,
+            left: 0,
+            zIndex: zIndexes[seed.id] || seed.zIndex,
             height: seedHeight,
             width: seedWidth,
             backgroundImage: `url(${seed.image})`,
             backgroundSize: "contain",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
-            transform: `rotate(${rotationRef.current[seed.id] || 0}deg) ${
-              selectedSeed === seed.id ? "scale(1.15)" : "scale(1)"
-            }`,
-            transition: "top 0.4s ease, transform 0.3s ease",
-            cursor: "grab",
+            transform: `translate(${seed.originalPosition.left}px, ${
+              hoveredSeed === seed.id && !selectedSeed
+                ? seed.originalPosition.top - 0.05 * seedHeight
+                : seed.originalPosition.top
+            }px) scale(${selectedSeed === seed.id ? 1.15 : 1})`,
+            transition: selectedSeed === seed.id ? "none" : "transform 0.2s ease-out",
+            cursor: freeze ? "default" : "grab",
+            willChange: "transform",
           }}
           onMouseDown={(e) => handleMouseDown(e, seed.id)}
-          onMouseEnter={() => handleMouseEnter(seed.id)}
-          onMouseLeave={() => handleMouseLeave(seed.id)}
-        ></div>
+          onMouseEnter={() => !freeze && setHoveredSeed(seed.id)}
+          onMouseLeave={() => setHoveredSeed(null)}
+        />
       ))}
     </>
   );

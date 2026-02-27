@@ -1,42 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 
 interface SignProps {
   onClick: () => void;
 }
 
 const ContinueSign: React.FC<SignProps> = ({ onClick }) => {
-  const viewportWidth = window.innerWidth;
-  const viewportHeight = window.innerHeight;
-  const signWidth = 0.2 * viewportHeight;
-  const signHeight = signWidth * 1.2;
-
-  const leftPosition = 0.9 * viewportWidth - signWidth / 2;
-  const bottomPosition = "8vh";
+  const layout = useMemo(() => {
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const signWidth = 0.2 * viewportHeight;
+    const signHeight = signWidth * 1.2;
+    const leftPosition = 0.9 * viewportWidth - signWidth / 2;
+    
+    return { signWidth, signHeight, leftPosition };
+  }, []);
 
   const [rotation, setRotation] = useState(0);
   const [hasHovered, setHasHovered] = useState(false);
 
-  const handleMouseEnter = () => {
+  const handleMouseEnter = useCallback(() => {
     if (hasHovered) return;
 
     setHasHovered(true);
-    let step = 0;
     const wiggleSequence = [-10, 20, -10, 0];
+    
+    wiggleSequence.forEach((angle, index) => {
+      setTimeout(() => setRotation(angle), index * 150);
+    });
+  }, [hasHovered]);
 
-    const animateWiggle = () => {
-      if (step < wiggleSequence.length) {
-        setRotation(wiggleSequence[step]);
-        step++;
-        setTimeout(animateWiggle, 375);
-      }
-    };
-
-    animateWiggle();
-  };
-
-  const handleMouseLeave = () => {
+  const handleMouseLeave = useCallback(() => {
     setHasHovered(false);
-  };
+  }, []);
 
   return (
     <div
@@ -45,10 +40,10 @@ const ContinueSign: React.FC<SignProps> = ({ onClick }) => {
       onMouseLeave={handleMouseLeave}
       style={{
         position: "absolute",
-        bottom: bottomPosition,
-        left: `${leftPosition}px`,
-        width: `${signWidth}px`,
-        height: `${signHeight}px`,
+        bottom: "8vh",
+        left: `${layout.leftPosition}px`,
+        width: `${layout.signWidth}px`,
+        height: `${layout.signHeight}px`,
         backgroundImage: "url('/artifacts/continue-sign.png')",
         backgroundRepeat: "no-repeat",
         backgroundSize: "contain",
@@ -56,7 +51,8 @@ const ContinueSign: React.FC<SignProps> = ({ onClick }) => {
         cursor: "pointer",
         transformOrigin: "bottom center",
         transform: `rotate(${rotation}deg)`,
-        transition: "transform 375ms ease-in-out",
+        transition: "transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1)",
+        willChange: "transform",
       }}
     />
   );

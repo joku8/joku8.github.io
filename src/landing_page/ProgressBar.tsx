@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 
 interface ProgressBarProps {
   isFilling: boolean;
@@ -19,32 +19,49 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
 }) => {
   const [progress, setProgress] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
+  const startTimeRef = useRef<number | null>(null);
+  const animationFrameRef = useRef<number>();
+
+  const FILL_DURATION = 2000; // 2 seconds to fill
+
+  const animate = useCallback((timestamp: number) => {
+    if (!startTimeRef.current) {
+      startTimeRef.current = timestamp;
+    }
+
+    const elapsed = timestamp - startTimeRef.current;
+    const newProgress = Math.min((elapsed / FILL_DURATION) * 100, 100);
+
+    setProgress(newProgress);
+
+    if (newProgress < 100) {
+      animationFrameRef.current = requestAnimationFrame(animate);
+    } else {
+      setIsComplete(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (freeze) return;
 
-    let interval: ReturnType<typeof setInterval> | null = null;
-
     if (isFilling && !isComplete) {
-      interval = setInterval(() => {
-        setProgress((prev) => {
-          if (prev >= 100) {
-            clearInterval(interval!);
-            setIsComplete(true);
-            return 100;
-          }
-          return prev + 5;
-        });
-      }, 100);
+      startTimeRef.current = null;
+      animationFrameRef.current = requestAnimationFrame(animate);
     } else if (!isFilling) {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
       setProgress(0);
       setIsComplete(false);
+      startTimeRef.current = null;
     }
 
     return () => {
-      if (interval) clearInterval(interval);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
     };
-  }, [isFilling, freeze, isComplete]);
+  }, [isFilling, freeze, isComplete, animate]);
 
   useEffect(() => {
     if (isComplete) {
@@ -86,7 +103,8 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
             width: `${progress}%`,
             height: "100%",
             backgroundColor: "#4caf50",
-            transition: "width 0.1s linear",
+            transition: "none",
+            willChange: "width",
           }}
         />
       </div>

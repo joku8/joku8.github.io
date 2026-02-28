@@ -1,6 +1,4 @@
 # ACM Certificate for CloudFront (must be in us-east-1)
-# Note: You'll need to manually validate this via DNS in Cloudflare
-
 resource "aws_acm_certificate" "website" {
   provider          = aws.us_east_1
   domain_name       = var.domain_name
@@ -25,14 +23,17 @@ resource "cloudflare_record" "acm_validation" {
     }
   }
 
-  zone_id         = data.cloudflare_zone.domain.id
-  name            = each.value.name
-  content         = trimsuffix(each.value.record, ".")
-  type            = each.value.type
-  ttl             = 60
-  allow_overwrite = true
+  zone_id = data.cloudflare_zone.domain.id
+  name    = trimsuffix(each.value.name, ".${var.domain_name}.")
+  content = trimsuffix(each.value.record, ".")
+  type    = each.value.type
+  ttl     = 60
 
   comment = "ACM certificate validation"
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_acm_certificate_validation" "website" {

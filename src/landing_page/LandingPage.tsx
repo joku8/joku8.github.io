@@ -71,7 +71,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
     }
 
     const startTime = Date.now();
-    const duration = 800; // 0.8 seconds
+    const duration = 1000;
 
     const animate = () => {
       const elapsed = Date.now() - startTime;

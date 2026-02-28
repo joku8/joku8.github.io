@@ -25,7 +25,7 @@ const ContinueSign: React.FC<SignProps> = ({ onClick }) => {
     const wiggleSequence = [-10, 20, -10, 0];
     
     wiggleSequence.forEach((angle, index) => {
-      setTimeout(() => setRotation(angle), index * 150);
+      setTimeout(() => setRotation(angle), index * 300);
     });
   }, [hasHovered]);
 
@@ -51,7 +51,7 @@ const ContinueSign: React.FC<SignProps> = ({ onClick }) => {
         cursor: "pointer",
         transformOrigin: "bottom center",
         transform: `rotate(${rotation}deg)`,
-        transition: "transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1)",
+        transition: "transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1)",
         willChange: "transform",
       }}
     />

@@ -1,7 +1,7 @@
 [
   {
     "id": "plantpass",
-    "image": "/images/plantpass_logo.png",
+    "image": "/images/logos/plantpass_logo.png",
     "title": "PlantPass: Spring Plant Fair Checkout and Revenue Tracking Application",
     "type": "UIUC Hort Club Spring Plant Fair",
     "dates": "Apr 2024 – Present",
@@ -37,7 +37,7 @@
   },
   {
     "id": "gamescope",
-    "image": "/images/GameScope_banner.png",
+    "image": "/images/projects/GameScope_banner.png",
     "title": "GameScope: Video game recommendation platform",
     "type": "Collaborative Project",
     "dates": "Jan 2026 – Present",
@@ -63,7 +63,7 @@
   },
   {
     "id": "terraref",
-    "image": "/images/TERRA-REF-Scanner.jpg",
+    "image": "/images/projects/TERRA-REF-Scanner.jpg",
     "title": "Development of a Machine Learning Model for Predicting Plant Traits Using High-Resolution Sensor Data from TERRA-REF",
     "type": "2024 Undergraduate Research Symposium",
     "dates": "Feb 2024 - Apr 2024",
@@ -87,7 +87,7 @@
   },
   {
     "id": "agrodetect",
-    "image": "/images/agrodetect-ss.png",
+    "image": "/images/projects/agrodetect-ss.png",
     "title": "AgroDetect: Crop Disease & Pest Tracker",
     "type": "HackIllinois 2023",
     "dates": "Mar 2023 - Nov 2023",

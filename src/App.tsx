@@ -7,7 +7,7 @@ const App: React.FC = () => {
   const [showPortfolio, setShowPortfolio] = useState(false);
 
   const backgroundStyle = {
-    backgroundImage: 'url("/images/farmland.jpg")',
+    backgroundImage: 'url("/images/personal/farmland.jpg")',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     minHeight: '100vh',

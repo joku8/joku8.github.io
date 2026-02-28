@@ -65,11 +65,11 @@ export function MyInfo() {
           </ActionIcon>
         </Group>
       <Group spacing="md">
-        <Image src="/images/uiuc_banner.png" className={classes.image} />
-        <Image src="/images/FBN-full.png" className={classes.image} />
+        <Image src="/images/banners/uiuc_banner.png" className={classes.image} />
+        <Image src="/images/logos/FBN-full.png" className={classes.image} />
       </Group>
       </div>
-      <Image src="/images/pfp.png" className={classes.image} />
+      <Image src="/images/personal/pfp.png" className={classes.image} />
     </div>
   );
 }

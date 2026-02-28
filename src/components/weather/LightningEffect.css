@@ -1,0 +1,16 @@
+.lightning-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+  transition: opacity 0.1s ease-in-out;
+}
+
+.lightning-effect.flash {
+  opacity: 0.8;
+}

@@ -3,6 +3,8 @@ import SeedStack from "./SeedStack";
 import ProgressBar from "./ProgressBar";
 import Typewriter from "./Typewriter";
 import ContinueSign from "./ContinueSign";
+import { WeatherService, WeatherCondition } from "../services/WeatherService";
+import WeatherVisualizer from "../components/weather/WeatherVisualizer";
 
 interface LandingPageProps {
   setShowPortfolio: (value: boolean) => void;
@@ -15,6 +17,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
   const [isSecondLineDone, setIsSecondLineDone] = useState(false);
   const [isThirdLineDone, setIsThirdLineDone] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
+  const [weatherCondition, setWeatherCondition] = useState<WeatherCondition>('sunny');
 
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
@@ -27,6 +30,15 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const fetchWeatherData = async () => {
+      const weatherData = await WeatherService.fetchWeather();
+      setWeatherCondition(weatherData.condition);
+    };
+
+    fetchWeatherData();
   }, []);
 
   useEffect(() => {
@@ -70,7 +82,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
   return (
     <div
       style={{
-        backgroundColor: fadeOut ? "#ffffff" : "#87ceeb",
+        backgroundColor: fadeOut ? "#ffffff" : "transparent",
         height: "100vh",
         width: "100vw",
         margin: 0,
@@ -81,6 +93,12 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
         opacity: fadeOut ? 0 : 1,
       }}
     >
+      <WeatherVisualizer
+        condition={weatherCondition}
+        viewportWidth={viewportWidth}
+        viewportHeight={viewportHeight}
+        fadeOut={fadeOut}
+      />
       <div
         style={{
           position: "absolute",
@@ -128,20 +146,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
         width={layout.progressBarWidth}
         top={"5vh"}
         freeze={isProgressComplete}
-      />
-
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: `${layout.sunWidth}px`,
-          height: "20vh",
-          backgroundImage: "url('/artifacts/sun.png')",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "contain",
-          backgroundPosition: "center",
-        }}
       />
 
       <SeedStack

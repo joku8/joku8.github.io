@@ -10,7 +10,7 @@ const ContinueSign: React.FC<SignProps> = ({ onClick }) => {
     const viewportHeight = window.innerHeight;
     const signWidth = 0.2 * viewportHeight;
     const signHeight = signWidth * 1.2;
-    const leftPosition = 0.9 * viewportWidth - signWidth / 2;
+    const leftPosition = viewportWidth - signWidth - 50; // Position near right edge with 50px margin
     
     return { signWidth, signHeight, leftPosition };
   }, []);
@@ -53,6 +53,7 @@ const ContinueSign: React.FC<SignProps> = ({ onClick }) => {
         transform: `rotate(${rotation}deg)`,
         transition: "transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1)",
         willChange: "transform",
+        zIndex: 100,
       }}
     />
   );

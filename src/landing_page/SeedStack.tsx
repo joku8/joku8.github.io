@@ -36,7 +36,7 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeig
     {
       id: "carrot",
       image: "/artifacts/carrot_seed_packet.png",
-      zIndex: 3,
+      zIndex: 103,
       originalPosition: {
         ...basePosition,
         top: basePosition.top + 0.1 * vpHeight,
@@ -45,7 +45,7 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeig
     {
       id: "cucumber",
       image: "/artifacts/cucumber_seed_packet.png",
-      zIndex: 2,
+      zIndex: 102,
       originalPosition: {
         ...basePosition,
         top: basePosition.top + 0.05 * vpHeight,
@@ -54,7 +54,7 @@ const SeedStack: React.FC<SeedStackProps> = ({ setProgressActive, freeze, vpHeig
     {
       id: "tomato",
       image: "/artifacts/tomato_seed_packet.png",
-      zIndex: 1,
+      zIndex: 101,
       originalPosition: {
         ...basePosition,
         top: basePosition.top,

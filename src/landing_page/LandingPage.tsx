@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import SeedStack from "./SeedStack";
-import ProgressBar from "./ProgressBar";
 import Typewriter from "./Typewriter";
 import ContinueSign from "./ContinueSign";
+import { WeatherService, WeatherCondition, WeatherData } from "../services/WeatherService";
+import WeatherVisualizer from "../components/weather/WeatherVisualizer";
+import WeatherInfoTile from "./WeatherInfoTile";
 
 interface LandingPageProps {
   setShowPortfolio: (value: boolean) => void;
@@ -15,6 +17,14 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
   const [isSecondLineDone, setIsSecondLineDone] = useState(false);
   const [isThirdLineDone, setIsThirdLineDone] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
+  const [weatherCondition, setWeatherCondition] = useState<WeatherCondition>('sunny');
+  const [weatherData, setWeatherData] = useState<WeatherData>({
+    condition: 'sunny',
+    temperature: 72,
+    timestamp: Date.now(),
+    description: 'Clear sky'
+  });
+  const [progress, setProgress] = useState(0);
 
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
@@ -27,6 +37,16 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const fetchWeatherData = async () => {
+      const data = await WeatherService.fetchWeather();
+      setWeatherCondition(data.condition);
+      setWeatherData(data);
+    };
+
+    fetchWeatherData();
   }, []);
 
   useEffect(() => {
@@ -43,6 +63,32 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
       setShowPortfolio(true);
     }, 1000);
   }, [setShowPortfolio]);
+
+  useEffect(() => {
+    if (!isProgressActive || isProgressComplete) {
+      setProgress(0);
+      return;
+    }
+
+    const startTime = Date.now();
+    const duration = 1000;
+
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      const newProgress = Math.min((elapsed / duration) * 100, 100);
+      
+      setProgress(newProgress);
+
+      if (newProgress < 100) {
+        requestAnimationFrame(animate);
+      } else {
+        setIsProgressComplete(true);
+      }
+    };
+
+    const animationId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationId);
+  }, [isProgressActive, isProgressComplete]);
 
   useEffect(() => {
     if (isThirdLineDone) {
@@ -70,7 +116,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
   return (
     <div
       style={{
-        backgroundColor: fadeOut ? "#ffffff" : "#87ceeb",
+        backgroundColor: fadeOut ? "#ffffff" : "transparent",
         height: "100vh",
         width: "100vw",
         margin: 0,
@@ -81,6 +127,12 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
         opacity: fadeOut ? 0 : 1,
       }}
     >
+      <WeatherVisualizer
+        condition={weatherCondition}
+        viewportWidth={viewportWidth}
+        viewportHeight={viewportHeight}
+        fadeOut={fadeOut}
+      />
       <div
         style={{
           position: "absolute",
@@ -92,6 +144,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
           textAlign: "left",
           lineHeight: "1.5",
           userSelect: "none",
+          zIndex: 100,
         }}
       >
         <Typewriter
@@ -121,28 +174,25 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
         )}
       </div>
 
-      <ProgressBar
-        isFilling={isProgressActive}
-        onComplete={() => setIsProgressComplete(true)}
-        left={layout.progressBarLeft}
-        width={layout.progressBarWidth}
-        top={"5vh"}
-        freeze={isProgressComplete}
-      />
-
+      {/* Weather Info Tile with Progress */}
       <div
         style={{
           position: "absolute",
-          top: 0,
-          left: 0,
-          width: `${layout.sunWidth}px`,
-          height: "20vh",
-          backgroundImage: "url('/artifacts/sun.png')",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "contain",
-          backgroundPosition: "center",
+          top: "20px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: 100,
         }}
-      />
+      >
+        <WeatherInfoTile
+          condition={weatherData.condition}
+          temperature={weatherData.temperature}
+          description={weatherData.description}
+          location="Des Moines, IA"
+          progress={progress}
+          isProgressActive={isProgressActive}
+        />
+      </div>
 
       <SeedStack
         setProgressActive={setIsProgressActive}
@@ -165,6 +215,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
           backgroundRepeat: "repeat-x",
           backgroundSize: "auto 100%",
           backgroundPosition: "top left",
+          zIndex: 100,
         }}
       />
 

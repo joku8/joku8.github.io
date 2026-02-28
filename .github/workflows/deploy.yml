@@ -47,9 +47,26 @@ jobs:
             aws s3 rb "s3://${{ secrets.DOMAIN_NAME }}" --force || true
           fi
           
-          # Delete ACM validation records in Cloudflare
-          echo "Cleaning up Cloudflare DNS records..."
-          # This will be handled by allow_overwrite in Terraform
+          # Delete ACM validation DNS records in Cloudflare
+          echo "Cleaning up Cloudflare ACM validation records..."
+          ZONE_ID=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones?name=${{ secrets.DOMAIN_NAME }}" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" | jq -r '.result[0].id')
+          
+          if [ "$ZONE_ID" != "null" ] && [ -n "$ZONE_ID" ]; then
+            echo "Found zone ID: $ZONE_ID"
+            # Get all DNS records that start with _acme-challenge or similar validation records
+            RECORDS=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records?type=CNAME" \
+              -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+              -H "Content-Type: application/json" | jq -r '.result[] | select(.name | startswith("_")) | .id')
+            
+            for RECORD_ID in $RECORDS; do
+              echo "Deleting DNS record: $RECORD_ID"
+              curl -s -X DELETE "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$RECORD_ID" \
+                -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+                -H "Content-Type: application/json" || true
+            done
+          fi
         continue-on-error: true
 
       - name: Initialize and Apply Terraform

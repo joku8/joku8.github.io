@@ -1,0 +1,89 @@
+name: Setup Infrastructure
+
+on:
+  workflow_dispatch:  # Manual trigger only
+  push:
+    paths:
+      - 'terraform/**'
+    branches:
+      - master
+
+jobs:
+  infrastructure:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.6.0"
+          terraform_wrapper: false
+
+      - name: Cleanup orphaned resources
+        run: |
+          # Delete S3 bucket if it exists
+          if aws s3 ls "s3://${{ secrets.DOMAIN_NAME }}" 2>/dev/null; then
+            echo "Found existing S3 bucket, cleaning up..."
+            aws s3 rm "s3://${{ secrets.DOMAIN_NAME }}" --recursive || true
+            aws s3 rb "s3://${{ secrets.DOMAIN_NAME }}" --force || true
+          fi
+          
+          # Delete ACM validation DNS records in Cloudflare
+          echo "Cleaning up Cloudflare ACM validation records..."
+          ZONE_ID=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones?name=${{ secrets.DOMAIN_NAME }}" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" | jq -r '.result[0].id')
+          
+          if [ "$ZONE_ID" != "null" ] && [ -n "$ZONE_ID" ]; then
+            echo "Found zone ID: $ZONE_ID"
+            RECORDS=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records?type=CNAME" \
+              -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+              -H "Content-Type: application/json" | jq -r '.result[] | select(.name | startswith("_")) | .id')
+            
+            for RECORD_ID in $RECORDS; do
+              echo "Deleting DNS record: $RECORD_ID"
+              curl -s -X DELETE "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$RECORD_ID" \
+                -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+                -H "Content-Type: application/json" || true
+            done
+          fi
+        continue-on-error: true
+
+      - name: Terraform Init
+        run: |
+          cd terraform
+          terraform init
+
+      - name: Terraform Plan
+        run: |
+          cd terraform
+          terraform plan
+        env:
+          TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          TF_VAR_domain_name: ${{ secrets.DOMAIN_NAME }}
+          TF_VAR_aws_region: us-east-1
+
+      - name: Terraform Apply
+        run: |
+          cd terraform
+          terraform apply -auto-approve
+        env:
+          TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          TF_VAR_domain_name: ${{ secrets.DOMAIN_NAME }}
+          TF_VAR_aws_region: us-east-1
+
+      - name: Infrastructure setup complete
+        run: |
+          echo "✅ Infrastructure deployed!"
+          echo "S3 Bucket: ${{ secrets.DOMAIN_NAME }}"
+          echo "Website: https://${{ secrets.DOMAIN_NAME }}"

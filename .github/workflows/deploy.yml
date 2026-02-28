@@ -32,76 +32,36 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: "1.6.0"
-          terraform_wrapper: false
-
-      - name: Cleanup orphaned resources
+      - name: Deploy to S3
         run: |
-          # Delete S3 bucket if it exists
-          if aws s3 ls "s3://${{ secrets.DOMAIN_NAME }}" 2>/dev/null; then
-            echo "Found existing S3 bucket, cleaning up..."
-            aws s3 rm "s3://${{ secrets.DOMAIN_NAME }}" --recursive || true
-            aws s3 rb "s3://${{ secrets.DOMAIN_NAME }}" --force || true
-          fi
+          # Use domain name directly as bucket name
+          BUCKET_NAME="${{ secrets.DOMAIN_NAME }}"
           
-          # Delete ACM validation DNS records in Cloudflare
-          echo "Cleaning up Cloudflare ACM validation records..."
-          ZONE_ID=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones?name=${{ secrets.DOMAIN_NAME }}" \
-            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
-            -H "Content-Type: application/json" | jq -r '.result[0].id')
-          
-          if [ "$ZONE_ID" != "null" ] && [ -n "$ZONE_ID" ]; then
-            echo "Found zone ID: $ZONE_ID"
-            # Get all DNS records that start with _acme-challenge or similar validation records
-            RECORDS=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records?type=CNAME" \
-              -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
-              -H "Content-Type: application/json" | jq -r '.result[] | select(.name | startswith("_")) | .id')
-            
-            for RECORD_ID in $RECORDS; do
-              echo "Deleting DNS record: $RECORD_ID"
-              curl -s -X DELETE "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$RECORD_ID" \
-                -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
-                -H "Content-Type: application/json" || true
-            done
-          fi
-        continue-on-error: true
-
-      - name: Initialize and Apply Terraform
-        id: terraform-output
-        run: |
-          cd terraform
-          terraform init
-          terraform apply -auto-approve
-          BUCKET_NAME=$(terraform output -raw s3_bucket_name)
-          DISTRIBUTION_ID=$(terraform output -raw cloudfront_distribution_id)
-          echo "bucket_name=$BUCKET_NAME" >> $GITHUB_OUTPUT
-          echo "distribution_id=$DISTRIBUTION_ID" >> $GITHUB_OUTPUT
-        env:
-          TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          TF_VAR_domain_name: ${{ secrets.DOMAIN_NAME }}
-          TF_VAR_aws_region: us-east-1
-
-      - name: Sync to S3
-        run: |
-          aws s3 sync dist/ s3://${{ steps.terraform-output.outputs.bucket_name }} \
+          # Sync static assets with long cache
+          aws s3 sync dist/ s3://$BUCKET_NAME \
             --delete \
             --cache-control "public, max-age=31536000, immutable" \
             --exclude "index.html" \
             --exclude "*.html"
           
-          aws s3 sync dist/ s3://${{ steps.terraform-output.outputs.bucket_name }} \
+          # Sync HTML files with no cache
+          aws s3 sync dist/ s3://$BUCKET_NAME \
             --exclude "*" \
             --include "*.html" \
             --cache-control "public, max-age=0, must-revalidate"
 
+      - name: Get CloudFront Distribution ID
+        id: cloudfront
+        run: |
+          # Get distribution ID by looking for the one serving our domain
+          DISTRIBUTION_ID=$(aws cloudfront list-distributions --query "DistributionList.Items[?Aliases.Items[?contains(@, '${{ secrets.DOMAIN_NAME }}')]].Id | [0]" --output text)
+          echo "distribution_id=$DISTRIBUTION_ID" >> $GITHUB_OUTPUT
+
       - name: Invalidate CloudFront cache
         run: |
           aws cloudfront create-invalidation \
-            --distribution-id ${{ steps.terraform-output.outputs.distribution_id }} \
+            --distribution-id ${{ steps.cloudfront.outputs.distribution_id }} \
             --paths "/*"
 
       - name: Deployment complete
-        run: echo "✅ Deployment successful!"
+        run: echo "✅ Deployed to https://${{ secrets.DOMAIN_NAME }}"

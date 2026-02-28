@@ -53,6 +53,7 @@ const ContinueSign: React.FC<SignProps> = ({ onClick }) => {
         transform: `rotate(${rotation}deg)`,
         transition: "transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1)",
         willChange: "transform",
+        zIndex: 100,
       }}
     />
   );

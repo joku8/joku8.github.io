@@ -130,7 +130,7 @@ const WeatherVisualizer: React.FC<WeatherVisualizerProps> = ({
           height: '100%',
           backgroundColor: config.skyColor,
           transition: 'background-color 2s ease-in-out',
-          zIndex: -1,
+          zIndex: 0,
           opacity: fadeOut ? 0 : 1
         }}
       />
@@ -148,7 +148,7 @@ const WeatherVisualizer: React.FC<WeatherVisualizerProps> = ({
             height: 'auto',
             opacity: fadeOut ? 0 : config.sunOpacity,
             transition: 'opacity 1s ease-in-out',
-            zIndex: 0,
+            zIndex: 1,
             pointerEvents: 'none'
           }}
         />
@@ -168,7 +168,7 @@ const WeatherVisualizer: React.FC<WeatherVisualizerProps> = ({
             height: 'auto',
             opacity: fadeOut ? 0 : (asset.opacity ?? 1),
             transition: 'opacity 1s ease-in-out',
-            zIndex: 1,
+            zIndex: 2,
             pointerEvents: 'none'
           }}
         />
@@ -218,7 +218,7 @@ const WeatherVisualizer: React.FC<WeatherVisualizerProps> = ({
             backgroundColor: 'white',
             opacity: fadeOut ? 0 : 0.6,
             transition: 'opacity 1s ease-in-out',
-            zIndex: 2,
+            zIndex: 3,
             pointerEvents: 'none'
           }}
         />

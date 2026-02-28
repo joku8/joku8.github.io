@@ -110,6 +110,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
           textAlign: "left",
           lineHeight: "1.5",
           userSelect: "none",
+          zIndex: 100,
         }}
       >
         <Typewriter
@@ -169,6 +170,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setShowPortfolio }) => {
           backgroundRepeat: "repeat-x",
           backgroundSize: "auto 100%",
           backgroundPosition: "top left",
+          zIndex: 100,
         }}
       />
 

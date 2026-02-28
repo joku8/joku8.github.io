@@ -77,6 +77,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
         left: `${left}px`,
         width: `${width}px`,
         textAlign: "center",
+        zIndex: 100,
       }}
     >
       <div

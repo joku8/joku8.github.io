@@ -33,6 +33,12 @@ export class WeatherService {
     // Check cache first
     const cachedWeather = this.getCachedWeather();
     if (cachedWeather) {
+      console.log('=== Using Cached Weather Data ===');
+      console.log('Cached Condition:', cachedWeather.condition);
+      console.log('Cached Temperature:', cachedWeather.temperature, '°F');
+      console.log('Cached Description:', cachedWeather.description);
+      console.log('Cache Age:', Math.round((Date.now() - cachedWeather.timestamp) / 1000), 'seconds');
+      console.log('=================================');
       return cachedWeather;
     }
 
@@ -64,6 +70,15 @@ export class WeatherService {
       // Parse response
       const apiResponse = await response.json();
 
+      console.log('=== Weather API Response ===');
+      console.log('Full API Response:', apiResponse);
+      console.log('Weather Code:', apiResponse.weather?.[0]?.id);
+      console.log('Weather Main:', apiResponse.weather?.[0]?.main);
+      console.log('Description:', apiResponse.weather?.[0]?.description);
+      console.log('Temperature:', apiResponse.main?.temp, '°F');
+      console.log('Cloud Coverage:', apiResponse.clouds?.all, '%');
+      console.log('Visibility:', apiResponse.visibility, 'meters');
+
       // Categorize weather and build WeatherData
       const weatherData: WeatherData = {
         condition: this.categorizeWeather(apiResponse),
@@ -71,6 +86,9 @@ export class WeatherService {
         timestamp: Date.now(),
         description: apiResponse.weather?.[0]?.description || 'Clear sky'
       };
+
+      console.log('Categorized Condition:', weatherData.condition);
+      console.log('===========================');
 
       // Cache the result
       this.setCachedWeather(weatherData);

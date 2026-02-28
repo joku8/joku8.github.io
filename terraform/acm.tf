@@ -25,11 +25,12 @@ resource "cloudflare_record" "acm_validation" {
     }
   }
 
-  zone_id = data.cloudflare_zone.domain.id
-  name    = each.value.name
-  value   = trimsuffix(each.value.record, ".")
-  type    = each.value.type
-  ttl     = 60
+  zone_id         = data.cloudflare_zone.domain.id
+  name            = each.value.name
+  content         = trimsuffix(each.value.record, ".")
+  type            = each.value.type
+  ttl             = 60
+  allow_overwrite = true
 
   comment = "ACM certificate validation"
 }

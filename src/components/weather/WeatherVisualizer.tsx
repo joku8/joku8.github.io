@@ -95,6 +95,13 @@ const WEATHER_CONFIGS: Record<WeatherCondition, WeatherConfig> = {
     ],
     sunVisible: false,
     sunOpacity: 0
+  },
+  unavailable: {
+    skyColor: '#87ceeb',
+    assets: [],
+    animations: [],
+    sunVisible: true,
+    sunOpacity: 0.5
   }
 };
 

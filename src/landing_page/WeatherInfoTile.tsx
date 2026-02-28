@@ -3,7 +3,7 @@ import { WeatherCondition } from "../services/WeatherService";
 
 interface WeatherInfoTileProps {
   condition: WeatherCondition;
-  temperature: number;
+  temperature: number | null;
   description: string;
   location: string;
   progress: number;
@@ -26,6 +26,7 @@ const WeatherInfoTile: React.FC<WeatherInfoTileProps> = ({
       snowy: "❄️",
       foggy: "🌫️",
       stormy: "⛈️",
+      unavailable: "❓",
     };
     return emojiMap[condition];
   };
@@ -80,7 +81,7 @@ const WeatherInfoTile: React.FC<WeatherInfoTileProps> = ({
             color: "#333",
           }}
         >
-          {Math.round(temperature)}°F
+          {temperature !== null ? `${Math.round(temperature)}°F` : 'N/A'}
         </div>
       </div>
 

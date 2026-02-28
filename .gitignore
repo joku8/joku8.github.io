@@ -23,6 +23,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.kiro/
 
 # Terraform
 terraform/.terraform/

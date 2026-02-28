@@ -14,7 +14,8 @@ describe('WeatherService - Cache Management', () => {
         condition: 'sunny',
         temperature: 75,
         timestamp: Date.now(),
-        description: 'Clear sky'
+        description: 'Clear sky',
+        available: true
       };
 
       // Access private methods via type assertion for testing
@@ -41,7 +42,8 @@ describe('WeatherService - Cache Management', () => {
         condition: 'rainy',
         temperature: 60,
         timestamp: Date.now(),
-        description: 'Light rain'
+        description: 'Light rain',
+        available: true
       };
 
       const service = WeatherService as any;
@@ -95,7 +97,8 @@ describe('WeatherService - Cache Management', () => {
         condition: 'cloudy',
         temperature: 65,
         timestamp: Date.now(),
-        description: 'Overcast'
+        description: 'Overcast',
+        available: true
       };
 
       // Should not throw error
@@ -129,7 +132,8 @@ describe('WeatherService - Cache Management', () => {
         condition: 'snowy',
         temperature: 28,
         timestamp: Date.now(),
-        description: 'Light snow'
+        description: 'Light snow',
+        available: true
       };
 
       const service = WeatherService as any;

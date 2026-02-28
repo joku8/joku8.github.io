@@ -2,13 +2,14 @@
  * WeatherService - Handles fetching and caching weather data from OpenWeatherMap API
  */
 
-export type WeatherCondition = 'sunny' | 'cloudy' | 'rainy' | 'snowy' | 'foggy' | 'stormy';
+export type WeatherCondition = 'sunny' | 'cloudy' | 'rainy' | 'snowy' | 'foggy' | 'stormy' | 'unavailable';
 
 export interface WeatherData {
   condition: WeatherCondition;
-  temperature: number;
+  temperature: number | null;
   timestamp: number;
   description: string;
+  available: boolean;
 }
 
 export interface WeatherCache {
@@ -27,7 +28,7 @@ export class WeatherService {
   /**
    * Fetches current weather data for Des Moines, IA
    * Returns cached data if available and not expired
-   * Falls back to default sunny weather on any error
+   * Returns unavailable state on any error
    */
   static async fetchWeather(): Promise<WeatherData> {
     // Check cache first
@@ -64,7 +65,7 @@ export class WeatherService {
       // Check for API errors
       if (!response.ok) {
         console.error(`Weather API error: ${response.status} ${response.statusText}`);
-        return this.getDefaultWeather();
+        return this.getUnavailableWeather();
       }
 
       // Parse response
@@ -84,7 +85,8 @@ export class WeatherService {
         condition: this.categorizeWeather(apiResponse),
         temperature: apiResponse.main?.temp || 72,
         timestamp: Date.now(),
-        description: apiResponse.weather?.[0]?.description || 'Clear sky'
+        description: apiResponse.weather?.[0]?.description || 'Clear sky',
+        available: true
       };
 
       console.log('Categorized Condition:', weatherData.condition);
@@ -109,8 +111,8 @@ export class WeatherService {
         console.error('Weather API error:', error);
       }
 
-      // Return default sunny weather on any error
-      return this.getDefaultWeather();
+      // Return unavailable weather on any error
+      return this.getUnavailableWeather();
     }
   }
 
@@ -218,15 +220,16 @@ export class WeatherService {
   }
 
   /**
-   * Returns default weather data (sunny condition)
-   * Used as fallback when API calls fail
+   * Returns unavailable weather state
+   * Used when API calls fail or data cannot be retrieved
    */
-  private static getDefaultWeather(): WeatherData {
+  private static getUnavailableWeather(): WeatherData {
     return {
-      condition: 'sunny',
-      temperature: 72,
+      condition: 'unavailable',
+      temperature: null,
       timestamp: Date.now(),
-      description: 'Clear sky'
+      description: 'Weather data unavailable',
+      available: false
     };
   }
 }

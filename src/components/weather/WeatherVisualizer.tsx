@@ -142,8 +142,8 @@ const WeatherVisualizer: React.FC<WeatherVisualizerProps> = ({
           alt="Sun"
           style={{
             position: 'fixed',
-            top: '5vh',
-            left: '5vw',
+            top: 0,
+            left: 0,
             width: '12vw',
             height: 'auto',
             opacity: fadeOut ? 0 : config.sunOpacity,
